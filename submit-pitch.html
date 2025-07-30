@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Pitch - LaunchPad</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-rocket"></i> LaunchPad
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pitches.html">Pitches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="login.html" class="btn btn-light me-2">Login</a>
+                    <a href="register.html" class="btn btn-outline-light">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Submit Your Pitch</h2>
+                        <form id="pitchForm">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Pitch Title</label>
+                                <input type="text" class="form-control" id="title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="videoUrl" class="form-label">Video URL (YouTube/Vimeo)</label>
+                                <input type="url" class="form-control" id="videoUrl" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="coverImage" class="form-label">Cover Image</label>
+                                <input type="file" class="form-control" id="coverImage" accept="image/*" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Pitch</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>LaunchPad</h5>
+                    <p>Empowering startups to reach new heights</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 LaunchPad. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Firebase Scripts -->
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC2C2dq3RwYQeUGGA8MzLgxtudcnL_dKuo",
+            authDomain: "launchpad-2ab08.firebaseapp.com",
+            projectId: "launchpad-2ab08",
+            storageBucket: "launchpad-2ab08.firebasestorage.app",
+            messagingSenderId: "974657612108",
+            appId: "1:974657612108:web:adbc2eb0183ca5996687e9",
+            measurementId: "G-Y3B565L6E0"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // Check if user is logged in
+        let currentUser = null;
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (!user) {
+                // Redirect to login page if not logged in
+                window.location.href = "login.html";
+            }
+        });
+
+        const form = document.getElementById("pitchForm");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            if (!currentUser) {
+                alert("Please log in to submit a pitch");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+            const videoUrl = document.getElementById("videoUrl").value;
+            const imageFile = document.getElementById("coverImage").files[0];
+
+            try {
+                // Show loading state
+                const submitButton = form.querySelector('button[type="submit"]');
+                const originalText = submitButton.textContent;
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
+
+                let imageUrl = null;
+                if (imageFile) {
+                    // Upload image to Firebase Storage
+                    const imageRef = ref(storage, `coverImages/${Date.now()}-${imageFile.name}`);
+                    await uploadBytes(imageRef, imageFile);
+                    imageUrl = await getDownloadURL(imageRef);
+                }
+
+                // Add pitch data to Firestore
+                await addDoc(collection(db, "pitches"), {
+                    title,
+                    description,
+                    videoUrl,
+                    coverImage: imageUrl,
+                    createdAt: serverTimestamp(),
+                    userId: currentUser.uid,
+                    authorName: currentUser.displayName || currentUser.email,
+                    status: "pending",
+                    views: 0,
+                    likes: 0,
+                    comments: 0
+                });
+
+                // Show success message
+                const toast = new bootstrap.Toast(document.getElementById('successToast'));
+                document.getElementById('toastMessage').textContent = 'Pitch submitted successfully!';
+                toast.show();
+
+                // Reset form and button
+                form.reset();
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
+                
+                // Redirect to pitches page after a short delay
+                setTimeout(() => {
+                    window.location.href = "pitches.html";
+                }, 2000);
+            } catch (error) {
+                console.error("Error submitting pitch:", error);
+                
+                // Show error message
+                const toast = new bootstrap.Toast(document.getElementById('errorToast'));
+                document.getElementById('errorToastMessage').textContent = 'Error submitting pitch: ' + error.message;
+                toast.show();
+                
+                // Reset button state
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.disabled = false;
+                submitButton.textContent = "Submit Pitch";
+            }
+        });
+    </script>
+</body>
+</html>

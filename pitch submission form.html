@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LaunchPad - Pitch Submission</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lucida Bright:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #940bfc;
+      --accent-color: #f59e0b;
+      --dark-color: #3e5984;
+      --light-color: #f8fafc;
+      --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      --neon-shadow: 0 0 10px rgba(9, 9, 9, 0.5), 0 0 20px rgba(101, 175, 255, 0.3);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      color: var(--dark-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar - Futuristic Style */
+    .navbar {
+      background: rgba(30, 41, 59, 0.95) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      transition: all 0.5s ease;
+    }
+    
+    .navbar.scrolled {
+      padding: 5px 0;
+      background: rgba(6, 6, 6, 0.98) !important;
+    }
+    
+    .navbar-brand {
+      font-family: 'Lucida Bright', sans-serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: white !important;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-brand:hover {
+      transform: scale(1.05);
+      text-shadow: var(--neon-shadow);
+    }
+    
+    .navbar-brand i {
+      margin-right: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-brand:hover i {
+      transform: rotate(15deg);
+      color: var(--accent-color);
+    }
+    
+    .nav-link {
+      position: relative;
+      color: rgba(255, 255, 255, 0.8) !important;
+      margin: 0 10px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: white !important;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .navbar-toggler {
+      border: none;
+      color: white;
+    }
+    
+    .navbar-toggler:focus {
+      box-shadow: 0 0 0 2px var(--accent-color);
+    }
+
+    /* Form Container */
+    .form-container {
+      max-width: 800px;
+      margin: 4rem auto 2rem;
+      background: #ffffff;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient);
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: bold;
+      color: var(--dark-color);
+      margin-bottom: 0.75rem;
+      font-family: 'Lucida Bright', sans-serif;
+    }
+
+    .subtitle {
+      color: #64748b;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--dark-color);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    /* Footer - Futuristic Style */
+    footer {
+      background: var(--dark-color);
+      padding: 60px 0 30px;
+      position: relative;
+      clip-path: polygon(0 20%, 100% 0, 100% 100%, 0% 100%);
+      margin-top: auto;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient);
+    }
+    
+    footer h5 {
+      font-family: 'Lucida Bright', sans-serif;
+      font-weight: 600;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    footer h5::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--accent-color);
+    }
+    
+    footer p {
+      opacity: 0.8;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      z-index: 9999;
+    }
+    
+    .toast {
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .toast-header {
+      padding: 12px 20px;
+    }
+    
+    .toast-body {
+      padding: 15px 20px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 1.5rem;
+        margin: 2rem auto;
+      }
+      
+      footer {
+        clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-rocket"></i> LaunchPad
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="pitches.html">Pitches</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="aboutus.html">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactus.html">Contact Us</a></li>
+        </ul>
+        <div class="d-flex align-items-center auth-buttons">
+          <a class="btn btn-outline-light me-2" href="register.html" id="registerBtn" style="display: inline-block;">Register</a>
+          <a class="btn btn-light" href="login.html" id="loginBtn" style="display: inline-block;">Sign in</a>
+          <a class="btn btn-light ms-2" href="profile.html" id="profileBtn" style="display: none;">Profile</a>
+          <button type="button" class="btn btn-outline-light ms-2" onclick="handleLogout()" id="logoutBtn" style="display: none;">Logout</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Form Container -->
+  <main class="form-container">
+    <h1>Submit Your Pitch</h1>
+    <p class="subtitle">Fill out the form below to submit your startup pitch to our platform</p>
+    
+    <form id="pitchSubmissionForm">
+      <div class="form-group">
+        <label for="startupName">Startup Name</label>
+        <input type="text" id="startupName" name="startupName" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="founderName">Founder Name(s)</label>
+        <input type="text" id="founderName" name="founderName" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Contact Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="category">Industry Category</label>
+        <select id="category" name="category" required>
+          <option value="">Select a category</option>
+          <option value="Technology">Technology</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Finance">Finance</option>
+          <option value="Education">Education</option>
+          <option value="E-commerce">E-commerce</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="stage">Current Stage</label>
+        <select id="stage" name="stage" required>
+          <option value="">Select development stage</option>
+          <option value="Idea">Idea Stage</option>
+          <option value="Prototype">Prototype</option>
+          <option value="MVP">Minimum Viable Product</option>
+          <option value="Revenue">Generating Revenue</option>
+          <option value="Scaling">Scaling</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="teamSize">Team Size</label>
+        <input type="number" id="teamSize" name="teamSize" min="1" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="summary">Pitch Summary (Elevator Pitch)</label>
+        <textarea id="summary" name="summary" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="problem">Problem Statement</label>
+        <textarea id="problem" name="problem" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="solution">Your Solution</label>
+        <textarea id="solution" name="solution" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="market">Target Market</label>
+        <textarea id="market" name="market" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="competitors">Competitive Landscape</label>
+        <textarea id="competitors" name="competitors" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="video">Pitch Video URL (Optional)</label>
+        <input type="url" id="video" name="video" placeholder="https://youtube.com/...">
+      </div>
+      
+      <div class="form-group">
+        <label for="deck">Pitch Deck (PDF, Optional)</label>
+        <input type="file" id="deck" name="deck" accept=".pdf">
+      </div>
+      
+      <div class="form-group">
+        <label for="additional">Additional Information</label>
+        <textarea id="additional" name="additional"></textarea>
+      </div>
+      
+      <div class="form-group form-check">
+        <input type="checkbox" id="terms" name="terms" class="form-check-input" required>
+        <label for="terms" class="form-check-label">I agree to the Terms of Service and Privacy Policy</label>
+      </div>
+      
+      <button type="submit">Submit Pitch</button>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>LaunchPad</h5>
+          <p>Empowering startups to reach new heights</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p>&copy; 2024 LaunchPad. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Success Toast -->
+    <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-success text-white">
+        <i class="fas fa-check-circle me-2"></i>
+        <strong class="me-auto">Success</strong>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="toastMessage">
+        Operation completed successfully!
+      </div>
+    </div>
+    
+    <!-- Error Toast -->
+    <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-danger text-white">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <strong class="me-auto">Error</strong>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="errorToastMessage">
+        An error occurred. Please try again.
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+  <!-- Custom JS -->
+  <script>
+    // Initialize Firebase (replace with your config)
+    const firebaseConfig = {
+      apiKey: "AIzaSyC2C2dq3RwYQeUGGA8MzLgxtudcnL_dKuo",
+      authDomain: "launchpad-2ab08.firebaseapp.com",
+      projectId: "launchpad-2ab08",
+      storageBucket: "launchpad-2ab08.firebasestorage.app",
+      messagingSenderId: "974657612108",
+      appId: "1:974657612108:web:adbc2eb0183ca5996687e9",
+      measurementId: "G-Y3B565L6E0"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    
+    // Form submission handler
+    document.getElementById('pitchSubmissionForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
+      
+      try {
+        // Check if user is authenticated
+        const user = auth.currentUser;
+        if (!user) {
+          throw new Error('Please sign in to submit a pitch');
+        }
+
+        // Get form values
+        const formData = {
+          startupName: document.getElementById('startupName').value,
+          founderName: document.getElementById('founderName').value,
+          email: document.getElementById('email').value,
+          category: document.getElementById('category').value,
+          stage: document.getElementById('stage').value,
+          teamSize: parseInt(document.getElementById('teamSize').value),
+          summary: document.getElementById('summary').value,
+          problem: document.getElementById('problem').value,
+          solution: document.getElementById('solution').value,
+          market: document.getElementById('market').value,
+          competitors: document.getElementById('competitors').value,
+          video: document.getElementById('video').value || null,
+          additional: document.getElementById('additional').value || null,
+          status: 'pending',
+          userId: user.uid, // Add user ID to the pitch data
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+        
+        // Add pitch to Firestore
+        const docRef = await db.collection('pitches').add(formData);
+        
+        // Show success toast
+        const toast = new bootstrap.Toast(document.getElementById('successToast'));
+        document.getElementById('toastMessage').textContent = 'Your pitch has been submitted successfully!';
+        toast.show();
+        
+        // Reset form
+        e.target.reset();
+        
+        // Redirect to founder dashboard with the new pitch ID
+        setTimeout(() => {
+          window.location.href = `founder-dashboard.html?pitch=${docRef.id}`;
+        }, 1500);
+      } catch (error) {
+        console.error('Error submitting pitch:', error);
+        // Show error toast instead of alert
+        const toast = new bootstrap.Toast(document.getElementById('errorToast'));
+        document.getElementById('errorToastMessage').textContent = error.message;
+        toast.show();
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Pitch';
+      }
+    });
+    
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 50) {
+        document.querySelector('.navbar').classList.add('scrolled');
+      } else {
+        document.querySelector('.navbar').classList.remove('scrolled');
+      }
+    });
+    
+    // Check auth state
+    auth.onAuthStateChanged(user => {
+      const registerBtn = document.getElementById('registerBtn');
+      const loginBtn = document.getElementById('loginBtn');
+      const profileBtn = document.getElementById('profileBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+      
+      if (user) {
+        // User is signed in
+        registerBtn.style.display = 'none';
+        loginBtn.style.display = 'none';
+        profileBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'inline-block';
+      } else {
+        // No user is signed in
+        registerBtn.style.display = 'inline-block';
+        loginBtn.style.display = 'inline-block';
+        profileBtn.style.display = 'none';
+        logoutBtn.style.display = 'none';
+      }
+    });
+    
+    // Logout handler
+    function handleLogout() {
+      auth.signOut().then(() => {
+        window.location.href = 'index.html';
+      }).catch(error => {
+        console.error('Logout error:', error);
+      });
+    }
+  </script>
+</body>
+</html>

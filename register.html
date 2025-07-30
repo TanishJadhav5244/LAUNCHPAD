@@ -1,0 +1,1049 @@
+<<<<<<< Updated upstream
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - PitchFrame</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #940bfc;
+      --accent-color: #f59e0b;
+      --dark-color: #3e5984;
+      --light-color: #f8fafc;
+      --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+      padding: 1rem;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .back-to-home {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background-color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      color: var(--dark-color);
+      font-weight: 500;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .back-to-home:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      color: var(--primary-color);
+    }
+
+    .register-container {
+      background: #ffffff;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 28rem;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .register-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient);
+    }
+
+    .logo {
+      height: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: bold;
+      color: var(--dark-color);
+      margin-bottom: 0.75rem;
+      font-family: 'Lucida Bright', sans-serif;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #64748b;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .register-button {
+      width: 100%;
+      padding: 1rem;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    .register-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .register-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .register-button:hover::before {
+      left: 100%;
+    }
+
+    .divider {
+      position: relative;
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .divider::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: #e2e8f0;
+    }
+
+    .divider span {
+      position: relative;
+      background-color: white;
+      padding: 0 1rem;
+      color: #64748b;
+      font-size: 0.875rem;
+    }
+
+    .social-login {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .social-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.5rem;
+      height: 3.5rem;
+      padding: 0.75rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .social-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .social-button img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .signup-link {
+      text-align: center;
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    .signup-link a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+
+    #errorMessage {
+      display: none;
+      margin-top: 1.25rem;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .requirements {
+      margin-bottom: 1.5rem;
+    }
+
+    .role-selection {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-check {
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-to-home">
+    <i class="fas fa-arrow-left"></i>
+    Back to Home
+  </a>
+  <div class="register-container">
+    <img src="social/logo.svg" alt="Logo" class="logo" />
+    <h1>Create Account</h1>
+    <p class="subtitle">Join our community of innovators</p>
+
+    <form id="registerForm">
+      <input type="text" id="signupName" placeholder="Full Name" required />
+      <input type="email" id="signupEmail" placeholder="Email Address" required />
+      <input type="password" id="signupPassword" placeholder="Password" required />
+
+
+      <div class="requirements">
+        <div class="requirement">✓ At least 8 characters</div>
+        <div class="requirement">✓ One uppercase letter</div>
+        <div class="requirement">✓ One number</div>
+        <div class="requirement">✓ One special character</div>
+      </div>
+      
+      <div class="role-selection">
+        <label class="role-label" for="userRole">I am a:</label>
+        <select id="userRole" name="userRole" class="form-select">
+          <option value="startup" selected>Startup Founder</option>
+          <option value="mentor">Mentor</option>
+          <option value="investor">Investor</option>
+        </select>
+      </div>
+
+      
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="termsCheck" required />
+        <label class="form-check-label" for="termsCheck">
+          I agree to the <a href="#">terms and conditions</a>
+        </label>
+      </div>
+
+      <div id="errorMessage" class="alert alert-danger"></div>
+
+      <button type="submit" class="register-button">Create Account</button>
+    </form>
+
+    <div class="divider">
+      <span>Or sign in with</span>
+    </div>
+
+    <div class="social-login">
+      <button type="button" class="social-button" id="googleSignIn">
+        <img src="social/google.svg" alt="Google" width="24" height="24">
+      </button>
+      <button type="button" class="social-button" id="facebookSignIn">
+        <img src="social/facebook.svg" alt="Facebook" width="24" height="24">
+      </button>
+      <button type="button" class="social-button" id="twitterSignIn">
+        <img src="social/twitter.svg" alt="Twitter" width="24" height="24">
+      </button>
+    </div>
+
+    <div class="login-link">
+      Already have an account? <a href="login.html">Login here</a>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <!-- Firebase Config -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC2C2dq3RwYQeUGGA8MzLgxtudcnL_dKuo",
+      authDomain: "launchpad-2ab08.firebaseapp.com",
+      projectId: "launchpad-2ab08",
+      storageBucket: "launchpad-2ab08.firebasestorage.app",
+      messagingSenderId: "974657612108",
+      appId: "1:974657612108:web:adbc2eb0183ca5996687e9",
+      measurementId: "G-Y3B565L6E0"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <!-- Register Script -->
+  <script>
+    const registerForm = document.getElementById('registerForm');
+    const passwordInput = document.getElementById('signupPassword');
+    const errorMessage = document.getElementById('errorMessage');
+
+    function validatePassword(password) {
+      const requirements = {
+        length: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        number: /[0-9]/.test(password),
+        special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+      };
+
+      const requirementElements = document.querySelectorAll('.requirement');
+      requirementElements[0].classList.toggle('met', requirements.length);
+      requirementElements[1].classList.toggle('met', requirements.uppercase);
+      requirementElements[2].classList.toggle('met', requirements.number);
+      requirementElements[3].classList.toggle('met', requirements.special);
+
+      return Object.values(requirements).every(Boolean);
+    }
+
+    passwordInput.addEventListener('input', (e) => {
+      validatePassword(e.target.value);
+    });
+
+    registerForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      errorMessage.style.display = 'none';
+
+      const fullName = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = passwordInput.value;
+      const selectedRole = document.getElementById('userRole').value;
+
+      if (!validatePassword(password)) {
+        errorMessage.textContent = "Please make sure your password meets all the requirements.";
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      // Show loading state
+      const submitButton = registerForm.querySelector('button[type="submit"]');
+      const originalText = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = "Creating Account...";
+
+      // Create user with email and password
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(function(userCredential) {
+          const user = userCredential.user;
+          
+          // Update user profile with display name
+          return user.updateProfile({
+            displayName: fullName
+          }).then(function() {
+            // Save additional user data to Firestore
+            return firebase.firestore().collection('users').doc(user.uid).set({
+              fullName: fullName,
+              email: email,
+              role: selectedRole,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          });
+        })
+        .then(function() {
+          // Registration successful
+          window.location.href = "index.html";
+        })
+        .catch(function(error) {
+          // Handle errors
+          console.error("Registration error:", error);
+          errorMessage.textContent = error.message;
+          errorMessage.style.display = 'block';
+          
+          // Reset button state
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        });
+    });
+
+    // Add click handlers for social login buttons
+    document.querySelectorAll('.social-button').forEach(button => {
+      button.addEventListener('click', function() {
+        const provider = this.querySelector('img').getAttribute('alt').toLowerCase();
+        errorMessage.style.display = 'none';
+        
+        // Show loading state
+        const submitButton = registerForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = "Connecting...";
+        
+        let authProvider;
+        
+        if (provider === 'google') {
+          authProvider = new firebase.auth.GoogleAuthProvider();
+        } else if (provider === 'facebook') {
+          authProvider = new firebase.auth.FacebookAuthProvider();
+        } else if (provider === 'twitter') {
+          authProvider = new firebase.auth.TwitterAuthProvider();
+        }
+        
+        if (authProvider) {
+          firebase.auth().signInWithPopup(authProvider)
+            .then(function(result) {
+              // Social login successful
+              const user = result.user;
+              
+              // Prompt for role selection if this is a new user
+              if (result.additionalUserInfo.isNewUser) {
+                const roleOptions = ['startup', 'mentor', 'investor'];
+                const roleLabels = {
+                  'startup': 'Startup Founder',
+                  'mentor': 'Mentor',
+                  'investor': 'Investor'
+                };
+                
+                // Create a simple modal for role selection
+                const roleModal = document.createElement('div');
+                roleModal.className = 'modal fade';
+                roleModal.id = 'roleSelectionModal';
+                roleModal.innerHTML = `
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Select Your Role</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Please select your role to complete registration:</p>
+                        <div class="mb-3">
+                          <label for="socialUserRole" class="form-label">I am a:</label>
+                          <select id="socialUserRole" name="socialUserRole" class="form-select">
+                            <option value="startup" selected>Startup Founder</option>
+                            <option value="mentor">Mentor</option>
+                            <option value="investor">Investor</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="confirmRoleBtn">Continue</button>
+                      </div>
+                    </div>
+                  </div>
+                `;
+                
+                document.body.appendChild(roleModal);
+                const modal = new bootstrap.Modal(roleModal);
+                modal.show();
+                
+                // Handle role confirmation
+                document.getElementById('confirmRoleBtn').addEventListener('click', function() {
+                  const selectedRole = document.getElementById('socialUserRole').value;
+                  
+                  // Save role to Firestore
+                  firebase.firestore().collection('users').doc(user.uid).set({
+                    fullName: user.displayName || 'User',
+                    email: user.email,
+                    role: selectedRole,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                  }).then(function() {
+                    modal.hide();
+                    window.location.href = "index.html";
+                  });
+                });
+              } else {
+                // Existing user, redirect to home
+                window.location.href = "index.html";
+              }
+            })
+            .catch(function(error) {
+              console.error("Social login error:", error);
+              errorMessage.textContent = error.message;
+              errorMessage.style.display = 'block';
+              
+              // Reset button state
+              submitButton.disabled = false;
+              submitButton.textContent = originalText;
+            });
+        }
+      });
+    });
+  </script>
+
+  <!-- Firebase -->
+  <script type="module" src="js/register.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - PitchFrame</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:linear-gradient(to right, #e0f7fa, #80deea);
+      padding: 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .back-to-home {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background-color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #111827;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .back-to-home:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      color: #3b82f6;
+    }
+
+    .register-container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 28rem;
+    }
+
+    .logo {
+      height: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #111827;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .register-button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .register-button:hover {
+      background-color: #2563eb;
+    }
+
+    .divider {
+      position: relative;
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+
+    .divider::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: #e5e7eb;
+    }
+
+    .divider span {
+      position: relative;
+      background-color: white;
+      padding: 0 0.75rem;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+
+    .social-register {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .social-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      padding: 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .social-button:hover {
+      background-color: #f9fafb;
+      border-color: #d1d5db;
+    }
+
+    .social-button img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .login-link {
+      text-align: center;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .login-link a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .requirement {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 0.25rem;
+    }
+
+    .requirement.met {
+      color: #059669;
+      font-weight: 500;
+    }
+
+    .form-check {
+      margin: 1rem 0;
+    }
+
+    .form-check-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .form-check-label a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    #errorMessage {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .role-selection {
+      margin-bottom: 1.5rem;
+    }
+
+    .role-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .form-select:focus {
+      border-color: #3b82f6;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    .role-options {
+      display: flex;
+      gap: 16px;
+    }
+
+    .role-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .role-option input[type="radio"] {
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-to-home">
+    <i class="fas fa-arrow-left"></i>
+    Back to Home
+  </a>
+  <div class="register-container">
+    <img src="social/logo.svg" alt="Logo" class="logo" />
+    <h1>Create Account</h1>
+    <p class="subtitle">Join our community of innovators</p>
+
+    <form id="registerForm">
+      <input type="text" id="signupName" placeholder="Full Name" required />
+      <input type="email" id="signupEmail" placeholder="Email Address" required />
+      <input type="password" id="signupPassword" placeholder="Password" required />
+
+      <div class="role-selection">
+        <label class="role-label" for="userRole">I am a:</label>
+        <select id="userRole" name="userRole" class="form-select">
+          <option value="startup" selected>Startup Founder</option>
+          <option value="mentor">Mentor</option>
+          <option value="investor">Investor</option>
+        </select>
+      </div>
+
+      <div class="requirements">
+        <div class="requirement">✓ At least 8 characters</div>
+        <div class="requirement">✓ One uppercase letter</div>
+        <div class="requirement">✓ One number</div>
+        <div class="requirement">✓ One special character</div>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="termsCheck" required />
+        <label class="form-check-label" for="termsCheck">
+          I agree to the <a href="#">terms and conditions</a>
+        </label>
+      </div>
+
+      <div id="errorMessage" class="alert alert-danger"></div>
+
+      <button type="submit" class="register-button">Create Account</button>
+    </form>
+
+    <div class="divider">
+      <span>Or sign in with</span>
+    </div>
+
+    <div class="social-register">
+      <button type="button" class="social-button" id="googleSignIn">
+        <img src="social/google.svg" alt="Google" width="24" height="24">
+      </button>
+      <button type="button" class="social-button" id="facebookSignIn">
+        <img src="social/facebook.svg" alt="Facebook" width="24" height="24">
+      </button>
+      <button type="button" class="social-button" id="twitterSignIn">
+        <img src="social/twitter.svg" alt="Twitter" width="24" height="24">
+      </button>
+    </div>
+
+    <div class="login-link">
+      Already have an account? <a href="login.html">Login here</a>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <!-- Firebase Config -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC2C2dq3RwYQeUGGA8MzLgxtudcnL_dKuo",
+      authDomain: "launchpad-2ab08.firebaseapp.com",
+      projectId: "launchpad-2ab08",
+      storageBucket: "launchpad-2ab08.firebasestorage.app",
+      messagingSenderId: "974657612108",
+      appId: "1:974657612108:web:adbc2eb0183ca5996687e9",
+      measurementId: "G-Y3B565L6E0"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <!-- Register Script -->
+  <script>
+    const registerForm = document.getElementById('registerForm');
+    const passwordInput = document.getElementById('signupPassword');
+    const errorMessage = document.getElementById('errorMessage');
+
+    function validatePassword(password) {
+      const requirements = {
+        length: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        number: /[0-9]/.test(password),
+        special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+      };
+
+      const requirementElements = document.querySelectorAll('.requirement');
+      requirementElements[0].classList.toggle('met', requirements.length);
+      requirementElements[1].classList.toggle('met', requirements.uppercase);
+      requirementElements[2].classList.toggle('met', requirements.number);
+      requirementElements[3].classList.toggle('met', requirements.special);
+
+      return Object.values(requirements).every(Boolean);
+    }
+
+    passwordInput.addEventListener('input', (e) => {
+      validatePassword(e.target.value);
+    });
+
+    registerForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      errorMessage.style.display = 'none';
+
+      const fullName = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = passwordInput.value;
+      const selectedRole = document.getElementById('userRole').value;
+
+      if (!validatePassword(password)) {
+        errorMessage.textContent = "Please make sure your password meets all the requirements.";
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      // Show loading state
+      const submitButton = registerForm.querySelector('button[type="submit"]');
+      const originalText = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = "Creating Account...";
+
+      // Create user with email and password
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(function(userCredential) {
+          const user = userCredential.user;
+          
+          // Update user profile with display name
+          return user.updateProfile({
+            displayName: fullName
+          }).then(function() {
+            // Save additional user data to Firestore
+            return firebase.firestore().collection('users').doc(user.uid).set({
+              fullName: fullName,
+              email: email,
+              role: selectedRole,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          });
+        })
+        .then(function() {
+          // Registration successful
+          window.location.href = "index.html";
+        })
+        .catch(function(error) {
+          // Handle errors
+          console.error("Registration error:", error);
+          errorMessage.textContent = error.message;
+          errorMessage.style.display = 'block';
+          
+          // Reset button state
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        });
+    });
+
+    // Add click handlers for social login buttons
+    document.querySelectorAll('.social-button').forEach(button => {
+      button.addEventListener('click', function() {
+        const provider = this.querySelector('img').getAttribute('alt').toLowerCase();
+        errorMessage.style.display = 'none';
+        
+        // Show loading state
+        const submitButton = registerForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = "Connecting...";
+        
+        let authProvider;
+        
+        if (provider === 'google') {
+          authProvider = new firebase.auth.GoogleAuthProvider();
+        } else if (provider === 'facebook') {
+          authProvider = new firebase.auth.FacebookAuthProvider();
+        } else if (provider === 'twitter') {
+          authProvider = new firebase.auth.TwitterAuthProvider();
+        }
+        
+        if (authProvider) {
+          firebase.auth().signInWithPopup(authProvider)
+            .then(function(result) {
+              // Social login successful
+              const user = result.user;
+              
+              // Prompt for role selection if this is a new user
+              if (result.additionalUserInfo.isNewUser) {
+                const roleOptions = ['startup', 'mentor', 'investor'];
+                const roleLabels = {
+                  'startup': 'Startup Founder',
+                  'mentor': 'Mentor',
+                  'investor': 'Investor'
+                };
+                
+                // Create a simple modal for role selection
+                const roleModal = document.createElement('div');
+                roleModal.className = 'modal fade';
+                roleModal.id = 'roleSelectionModal';
+                roleModal.innerHTML = `
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Select Your Role</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Please select your role to complete registration:</p>
+                        <div class="mb-3">
+                          <label for="socialUserRole" class="form-label">I am a:</label>
+                          <select id="socialUserRole" name="socialUserRole" class="form-select">
+                            <option value="startup" selected>Startup Founder</option>
+                            <option value="mentor">Mentor</option>
+                            <option value="investor">Investor</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="confirmRoleBtn">Continue</button>
+                      </div>
+                    </div>
+                  </div>
+                `;
+                
+                document.body.appendChild(roleModal);
+                const modal = new bootstrap.Modal(roleModal);
+                modal.show();
+                
+                // Handle role confirmation
+                document.getElementById('confirmRoleBtn').addEventListener('click', function() {
+                  const selectedRole = document.getElementById('socialUserRole').value;
+                  
+                  // Save role to Firestore
+                  firebase.firestore().collection('users').doc(user.uid).set({
+                    fullName: user.displayName || 'User',
+                    email: user.email,
+                    role: selectedRole,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                  }).then(function() {
+                    modal.hide();
+                    window.location.href = "index.html";
+                  });
+                });
+              } else {
+                // Existing user, redirect to home
+                window.location.href = "index.html";
+              }
+            })
+            .catch(function(error) {
+              console.error("Social login error:", error);
+              errorMessage.textContent = error.message;
+              errorMessage.style.display = 'block';
+              
+              // Reset button state
+              submitButton.disabled = false;
+              submitButton.textContent = originalText;
+            });
+        }
+      });
+    });
+  </script>
+
+  <!-- Firebase -->
+  <script type="module" src="js/register.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+>>>>>>> Stashed changes
+</html>

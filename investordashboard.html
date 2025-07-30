@@ -1,0 +1,20 @@
+<script>
+// Check user authentication and role
+firebase.auth().onAuthStateChanged(async (user) => {
+    if (user) {
+        try {
+            const userDoc = await firebase.firestore().collection('users').doc(user.uid).get();
+            if (!userDoc.exists || userDoc.data().role !== 'investor') {
+                // User is not an investor, redirect to appropriate dashboard
+                window.location.href = 'index.html';
+            }
+        } catch (error) {
+            console.error('Error checking user role:', error);
+            window.location.href = 'index.html';
+        }
+    } else {
+        // No user is signed in, redirect to login
+        window.location.href = 'login.html';
+    }
+});
+</script>

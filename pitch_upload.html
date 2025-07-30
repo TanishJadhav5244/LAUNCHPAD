@@ -1,0 +1,15 @@
+<form action="backend/submit_pitch.php" method="POST" enctype="multipart/form-data" class="p-4">
+  <div class="mb-3">
+    <label>Startup Name</label>
+    <input type="text" name="startup_name" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label>Pitch Description</label>
+    <textarea name="description" class="form-control" required></textarea>
+  </div>
+  <div class="mb-3">
+    <label>Pitch Deck (PDF)</label>
+    <input type="file" name="pitch_deck" class="form-control" required>
+  </div>
+  <button type="submit" class="btn btn-success">Upload Pitch</button>
+</form>

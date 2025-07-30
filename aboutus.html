@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+<<<<<<< Updated upstream
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>About Us - Launchpad</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #940bfc;
+      --accent-color: #f59e0b;
+      --dark-color: #3e5984;
+      --light-color: #f8fafc;
+      --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+=======
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Launchpad</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+>>>>>>> Stashed changes
+    }
+
+    body {
+      margin: 0;
+<<<<<<< Updated upstream
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+      color: var(--dark-color);
+      min-height: 100vh;
+      position: relative;
+      padding-top: 76px;
+      padding-bottom: 2px;
+    }
+
+    .navbar {
+      background: #1e2937 !important;
+      padding: 0.75rem 2rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      height: 76px;
+    }
+
+    .navbar-brand {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: white !important;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .navbar .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 1400px;
+    }
+
+    .navbar-nav {
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: #94a3b8 !important;
+      font-weight: 500;
+      padding: 0.5rem 0;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: white !important;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-register {
+      background-color: white;
+      color: #1e2937;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+    }
+
+    .btn-signin {
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+    }
+
+    .btn-register:hover {
+      background-color: #f3f4f6;
+    }
+
+    .btn-signin:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+=======
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #80deea);
+      color: #333;
+      
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+>>>>>>> Stashed changes
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+<<<<<<< Updated upstream
+      text-align: center;
+=======
+      padding: 40px 20px;
+    }
+
+    /* Add a new class for the nav container */
+    .navbar .container {
+      max-width: 100%;
+      padding: 0 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Center the navigation items */
+    .navbar-nav {
+      margin: 0 auto;
+    }
+
+    .navbar-brand {
+      margin-right: 2rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-collapse {
+      flex-grow: 0;
+>>>>>>> Stashed changes
+    }
+
+    h1, h2 {
+      text-align: center;
+<<<<<<< Updated upstream
+      color: var(--dark-color);
+      font-family: 'Lucida Bright', sans-serif;
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    h1::after, h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--gradient);
+      border-radius: 2px;
+=======
+      color: #00796b;
+>>>>>>> Stashed changes
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+<<<<<<< Updated upstream
+    footer {
+            background: var(--dark-color);
+            padding: 60px 0 30px;
+            position: absolute;
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0% 100%);
+            bottom: 0;
+            width: 100%;
+      z-index: 10;
+        }
+
+
+       /* Button Hover Effects */
+       .btn-outline-light {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn-outline-light::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient);
+      transition: all 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn-outline-light:hover {
+      color: white !important;
+      border-color: transparent;
+    }
+
+    .btn-outline-light:hover::before {
+      left: 0;
+    }
+
+=======
+>>>>>>> Stashed changes
+    .team-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+<<<<<<< Updated upstream
+      width: 100%;
+=======
+>>>>>>> Stashed changes
+    }
+
+    .team-member {
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+<<<<<<< Updated upstream
+      padding: 30px;
+=======
+      padding: 20px;
+>>>>>>> Stashed changes
+      width: 42%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+<<<<<<< Updated upstream
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .team-member::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient);
+    }
+
+    .team-member img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      border: 4px solid var(--primary-color);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .team-member h3 {
+      margin: 15px 0 5px;
+      font-size: 20px;
+      color: var(--dark-color);
+      font-weight: 600;
+=======
+      
+    }
+
+    .team-member:hover {
+      transform: scale(1.06);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+    }
+
+    .team-member img {
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 12px;
+      border: 3px solid #009688;
+    }
+
+    .team-member h3 {
+      margin: 8px 0 4px;
+      font-size: 18px;
+      color: #009688;
+>>>>>>> Stashed changes
+    }
+
+    .team-member p {
+      margin: 0;
+<<<<<<< Updated upstream
+      font-size: 16px;
+      color: #64748b;
+=======
+      font-size: 15px;
+    }
+
+    @keyframes fadeInCard {
+      0% {
+        opacity: 0;
+        
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+>>>>>>> Stashed changes
+    }
+
+    .launchpad-info {
+      margin-top: 60px;
+      background-color: #ffffff;
+<<<<<<< Updated upstream
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 100px;
+      text-align: left;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .launchpad-info::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--gradient);
+    }
+
+    .launchpad-info h2 {
+      color: var(--dark-color);
+=======
+      padding: 30px 20px;
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+     
+    }
+
+    .launchpad-info h2 {
+      color: #00695c;
+>>>>>>> Stashed changes
+    }
+
+    .launchpad-info ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .launchpad-info li {
+<<<<<<< Updated upstream
+      margin: 20px 0;
+      font-size: 17px;
+      position: relative;
+      padding-left: 35px;
+      line-height: 1.6;
+=======
+      margin: 15px 0;
+      font-size: 17px;
+      position: relative;
+      padding-left: 25px;
+>>>>>>> Stashed changes
+    }
+
+    .launchpad-info li::before {
+      content: "🚀";
+      position: absolute;
+      left: 0;
+<<<<<<< Updated upstream
+      font-size: 20px;
+      color: var(--primary-color);
+=======
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+>>>>>>> Stashed changes
+    }
+
+    @media (max-width: 768px) {
+      .team-member {
+        width: 100%;
+      }
+<<<<<<< Updated upstream
+      
+      .launchpad-info {
+        padding: 30px 20px;
+        margin-bottom: 80px;
+      }
+    }
+
+    @media (max-width: 991.98px) {
+      .navbar-collapse {
+        background: #1e2937;
+        padding: 1rem;
+        margin: 0 -2rem;
+      }
+      
+      .navbar-nav {
+        margin: 1rem 0;
+      }
+      
+      .auth-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+      }
+      
+      .btn-register, .btn-signin {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .nav-item.dashboard-item {
+      display: block;
+    }
+
+    .user-logged-in .nav-item.dashboard-item {
+      display: block;
+    }
+
+    .user-logged-in .auth-buttons {
+      display: none;
+    }
+
+    nav.navbar {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Auth State Transitions */
+    .auth-buttons {
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .auth-buttons.transitioning {
+      opacity: 0;
+    }
+
+    /* Modal Animations */
+    .modal.fade .modal-dialog {
+      transition: transform 0.3s ease-out;
+    }
+
+    .modal.show .modal-dialog {
+      transform: none;
+    }
+
+    /* State-based button styles */
+    .btn-auth {
+      transition: all 0.3s ease;
+    }
+
+    .btn-auth:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Profile button specific styles */
+    .btn-profile {
+      background: var(--gradient);
+      color: white;
+      border: none;
+    }
+
+    .btn-profile:hover {
+      background: var(--gradient);
+      opacity: 0.9;
+    }
+    .btn-outline-light {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn-outline-light::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient);
+      transition: all 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn-outline-light:hover {
+      color: white !important;
+      border-color: transparent;
+    }
+
+    .btn-outline-light:hover::before {
+      left: 0;
+=======
+>>>>>>> Stashed changes
+    }
+  </style>
+</head>
+<body>
+<<<<<<< Updated upstream
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-rocket"></i>
+        LaunchPad
+=======
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-rocket"></i> LaunchPad
+>>>>>>> Stashed changes
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+<<<<<<< Updated upstream
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="pitches.html">Pitches</a></li>
+          <li class="nav-item"><a class="nav-link" href="founderdashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link active" href="aboutus.html">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactus.html">Contact Us</a></li>
+        </ul>
+        <div class="auth-buttons">
+          <a href="register.html" class="btn btn-register">Register</a>
+          <a href="login.html" class="btn btn-signin">Sign in</a>
+=======
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="pitches.html">Pitches</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="aboutus.html">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactus.html">Contact Us</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <a class="btn btn-outline-light me-2" href="register.html">Register</a>
+          <a class="btn btn-light" href="login.html">Sign in</a>
+          <a class="btn btn-light ms-2" href="profile.html" id="profileBtn" style="display: none;">Profile</a>
+          <button class="btn btn-outline-light ms-2" onclick="handleLogout()" id="logoutBtn" style="display: none;">Logout</button>
+>>>>>>> Stashed changes
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>About Launchpad</h1>
+    <p>
+      <strong>Launchpad – Startup Pitch Portal</strong> is a student-led initiative designed to provide a platform for budding entrepreneurs to present their startup ideas. Our mission is to empower innovative minds by offering a simple, structured way to submit and track startup pitches.
+    </p>
+
+    <h2>Meet Our Team</h2>
+    <div class="team-section">
+      <div class="team-member">
+        <img src="https://via.placeholder.com/110" alt="Ankita Gidde">
+        <h3>Ankita Gidde</h3>
+        <p>Frontend Developer</p>
+      </div>
+      <div class="team-member">
+        <img src="https://via.placeholder.com/110" alt="Samruddhi Kshirsagar">
+        <h3>Samruddhi Kshirsagar</h3>
+        <p>UI/UX Designer</p>
+      </div>
+      <div class="team-member">
+        <img src="https://via.placeholder.com/110" alt="Tanish Jadhav">
+        <h3>Tanish Jadhav</h3>
+        <p>Backend & Firebase</p>
+      </div>
+      <div class="team-member">
+        <img src="https://via.placeholder.com/110" alt="Prafull Harer">
+        <h3>Prafull Harer</h3>
+        <p>Project Manager</p>
+      </div>
+    </div>
+
+<<<<<<< Updated upstream
+   
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-4">
+                    <div class="profile-avatar mb-3">
+                        <i class="fas fa-user-circle fa-5x text-primary"></i>
+                    </div>
+                    <h4 id="profileName">Loading...</h4>
+                    <p id="profileEmail" class="text-muted">Loading...</p>
+                </div>
+                <div class="profile-details">
+                    <div class="mb-3">
+                        <h6>Role</h6>
+                        <p id="profileAccountType" class="badge bg-primary">Loading...</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Member Since</h6>
+                        <p id="profileMemberSince">Loading...</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Last Login</h6>
+                        <p id="profileLastLogin">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutConfirmModalLabel">Confirm Logout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to logout?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Error Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-danger text-white">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <strong class="me-auto">Error</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toastErrorMessage">
+            An error occurred!
+        </div>
+    </div>
+</div>
+  <!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="logoutConfirmModalLabel">Confirm Logout</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p>Are you sure you want to logout?</p>
+          </div>
+          
+      </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Auth State Management -->
+    <script type="module">
+      // Import Firebase SDKs
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  
+      // Firebase configuration
+      const firebaseConfig = {
+          apiKey: "AIzaSyC2C2dq3RwYQeUGGA8MzLgxtudcnL_dKuo",
+          authDomain: "launchpad-2ab08.firebaseapp.com",
+          projectId: "launchpad-2ab08",
+          storageBucket: "launchpad-2ab08.firebasestorage.app",
+          messagingSenderId: "974657612108",
+          appId: "1:974657612108:web:adbc2eb0183ca5996687e9",
+          measurementId: "G-Y3B565L6ED"
+      };
+  
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+  
+      // Auth state management
+      onAuthStateChanged(auth, (user) => {
+          const authButtonsContainer = document.querySelector('.auth-buttons');
+          
+          if (user) {
+              // User is signed in
+              authButtonsContainer.innerHTML = `
+                  <a href="#" class="btn btn-light btn-auth btn-profile" 
+                     data-bs-toggle="modal" data-bs-target="#profileModal">
+                     <i class="fas fa-user-circle me-2"></i>Profile
+                  </a>
+                  <button type="button" class="btn btn-outline-light ms-2 btn-auth" 
+                          data-bs-toggle="modal" data-bs-target="#logoutConfirmModal">
+                     <i class="fas fa-sign-out-alt me-2"></i>Logout
+                  </button>
+              `;
+          } else {
+              // User is signed out
+              authButtonsContainer.innerHTML = `
+                  <a class="btn btn-outline-light me-2" href="register.html">Register</a>
+                  <a class="btn btn-light" href="login.html">Sign in</a>
+              `;
+          }
+      });
+  
+      // Handle logout function
+      window.handleLogout = async function() {
+          try {
+              await signOut(auth);
+              window.location.href = 'index.html';
+          } catch (error) {
+              console.error('Logout error:', error);
+              alert(error.message);
+          }
+      };
+  </script>
+=======
+    <div class="launchpad-info">
+      <h2>Launchpad for Startups</h2>
+      <p>Our platform is designed to support startup founders and student innovators with the following:</p>
+      <ul>
+        <li>Submit your startup pitch with a clear, structured form</li>
+        <li>Track all your ideas and submissions in one place</li>
+        <li>Showcase your startup to potential mentors and investors</li>
+        <li>Receive constructive feedback and support from a community</li>
+        <li>Connect with other aspiring entrepreneurs</li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+>>>>>>> Stashed changes
+</body>
+</html>
