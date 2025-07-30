@@ -1,0 +1,85 @@
+body {
+    background: linear-gradient(to right, #e0f7fa, #80deea);
+    min-height: 100vh;
+    padding-bottom: 2rem;
+}
+
+.profile-container {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #e0f7fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.profile-avatar i {
+    font-size: 3rem;
+    color: #3b82f6;
+}
+
+.profile-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.profile-email {
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.profile-role {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: #e0f7fa;
+    color: #3b82f6;
+    border-radius: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.profile-section {
+    margin-bottom: 2rem;
+}
+
+.profile-section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.profile-info-item {
+    margin-bottom: 1rem;
+}
+
+.profile-info-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+}
+
+.profile-info-value {
+    font-weight: 500;
+}
+
+.edit-profile-btn {
+    margin-top: 1rem;
+}

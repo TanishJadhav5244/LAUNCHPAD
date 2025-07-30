@@ -1,0 +1,290 @@
+    :root {
+        --primary-color: #2563eb;
+        --secondary-color: #940bfc;
+        --accent-color: #f59e0b;
+        --dark-color: #3e5984;
+        --light-color: #f8fafc;
+        --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        --neon-shadow: 0 0 10px rgba(9, 9, 9, 0.5), 0 0 20px rgba(101, 175, 255, 0.3);
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f7fa;
+        color: var(--dark-color);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Navbar - Futuristic Style */
+    .navbar {
+        background: rgba(30, 41, 59, 0.95) !important;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        transition: all 0.5s ease;
+    }
+
+    .navbar.scrolled {
+        padding: 5px 0;
+        background: rgba(6, 6, 6, 0.98) !important;
+    }
+
+    .navbar-brand {
+        font-family: 'Lucida Bright', sans-serif;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: white !important;
+        transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+        transform: scale(1.05);
+        text-shadow: var(--neon-shadow);
+    }
+
+    .navbar-brand i {
+        margin-right: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover i {
+        transform: rotate(15deg);
+        color: var(--accent-color);
+    }
+
+    .nav-link {
+        position: relative;
+        color: rgba(255, 255, 255, 0.8) !important;
+        margin: 0 10px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent-color);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: white !important;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .navbar-toggler {
+        border: none;
+        color: white;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 2px var(--accent-color);
+    }
+
+    /* Form Container */
+    .form-container {
+        max-width: 800px;
+        margin: 4rem auto 2rem;
+        background: #ffffff;
+        padding: 2.5rem;
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: var(--gradient);
+    }
+
+    h1 {
+        font-size: 1.75rem;
+        font-weight: bold;
+        color: var(--dark-color);
+        margin-bottom: 0.75rem;
+        font-family: 'Lucida Bright', sans-serif;
+    }
+
+    .subtitle {
+        color: #64748b;
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    label {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    button {
+        width: 100%;
+        padding: 1rem;
+        background: var(--gradient);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        margin-top: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+    }
+
+    button:hover::before {
+        left: 100%;
+    }
+
+    /* Footer - Futuristic Style */
+    footer {
+        background: var(--dark-color);
+        padding: 60px 0 30px;
+        position: relative;
+        clip-path: polygon(0 20%, 100% 0, 100% 100%, 0% 100%);
+        margin-top: auto;
+    }
+
+    footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--gradient);
+    }
+
+    footer h5 {
+        font-family: 'Lucida Bright', sans-serif;
+        font-weight: 600;
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+    }
+
+    footer h5::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--accent-color);
+    }
+
+    footer p {
+        opacity: 0.8;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+        z-index: 9999;
+    }
+
+    .toast {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .toast-header {
+        padding: 12px 20px;
+    }
+
+    .toast-body {
+        padding: 15px 20px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 1.5rem;
+            margin: 2rem auto;
+        }
+
+        footer {
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+        }
+    }
+
+    </style>

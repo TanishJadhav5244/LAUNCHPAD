@@ -1,0 +1,326 @@
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #940bfc;
+    --accent-color: #f59e0b;
+    --dark-color: #3e5984;
+    --light-color: #000000;
+    --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    --neon-shadow: 0 0 10px rgba(9, 9, 9, 0.5), 0 0 20px rgba(101, 175, 255, 0.3);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa;
+    color: var(--dark-color);
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 200px;
+    /* Space for footer */
+    padding-top: 80px;
+    /* Space for fixed navbar */
+}
+
+/* Navbar Styles */
+.navbar {
+    background: #1e2937 !important;
+    padding: 0.75rem 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar .container {
+    max-width: 1400px;
+}
+
+.navbar-nav {
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: #94a3b8 !important;
+    font-weight: 500;
+    padding: 0.5rem 0;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: white !important;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn-register {
+    background-color: white;
+    color: #1e2937;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+}
+
+.btn-signin {
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+}
+
+.btn-register:hover {
+    background-color: #f3f4f6;
+}
+
+.btn-signin:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Form Controls */
+.form-control {
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 1px solid #e2e8f0;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-select {
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 1px solid #e2e8f0;
+}
+
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Button Hover Effects */
+.btn-outline-light {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-outline-light::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.btn-outline-light:hover {
+    color: white !important;
+    border-color: transparent;
+}
+
+.btn-outline-light:hover::before {
+    left: 0;
+}
+
+/* Button Styles */
+.btn-primary {
+    background: var(--gradient);
+    border: none;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 12px 30px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+/* Search and Filter Section */
+.input-group {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.input-group .form-control {
+    border: none;
+    padding: 15px 25px;
+}
+
+.input-group .btn {
+    padding: 15px 25px;
+    border: none;
+}
+
+/* Pagination */
+.pagination {
+    margin-top: 2rem;
+}
+
+.page-link {
+    color: var(--primary-color);
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 8px;
+}
+
+.page-link:hover {
+    background: var(--gradient);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.page-item.active .page-link {
+    background: var(--gradient);
+    border: none;
+}
+
+/* Footer */
+footer {
+    background: var(--dark-color);
+    padding: 60px 0 30px;
+    position: absolute;
+    clip-path: polygon(0 20%, 100% 0, 100% 100%, 0% 100%);
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--gradient);
+}
+
+footer h5 {
+    font-family: 'Lucida Bright', sans-serif;
+    font-weight: 600;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+}
+
+footer h5::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--accent-color);
+}
+
+footer p {
+    opacity: 0.8;
+}
+
+/* Modal Styles */
+.modal-content {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    background: var(--gradient);
+    color: white;
+    border-bottom: none;
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+/* Main Content */
+.container.py-5 {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    min-height: calc(100vh - 280px);
+    /* Viewport height minus navbar and footer */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .input-group {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 250px;
+        /* More space for footer on mobile */
+    }
+
+    .container.py-5 {
+        margin-top: 0.5rem;
+        min-height: calc(100vh - 330px);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background: #1e2937;
+        padding: 1rem;
+        margin: 0 -2rem;
+    }
+
+    .navbar-nav {
+        margin: 1rem 0;
+    }
+
+    .auth-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .btn-register,
+    .btn-signin {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Add this to your styles */
+    .auth-buttons {
+        border: 1px solid red;
+        /* Temporary debug border */
+        padding: 10px;
+        background: rgba(255, 0, 0, 0.1);
+        /* Temporary debug background */
+    }
+
+    .btn-register,
+    .btn-signin {
+        border: 1px solid blue;
+        /* Temporary debug border */
+        margin: 2px;
+    }
+}
