@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LaunchPad - Startup Pitch Portal</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/styles.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lucida Bright:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #940bfc;
+      --accent-color: #f59e0b;
+      --dark-color: #3e5984;
+      --light-color: #000000;
+      --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      --neon-shadow: 0 0 10px rgba(9, 9, 9, 0.5), 0 0 20px rgba(101, 175, 255, 0.3);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      color: var(--dark-color);
+      overflow-x: hidden;
+      padding-top: 76px;
+      /* Height of navbar */
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background: #1e2937 !important;
+      padding: 0.75rem 2rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      height: 76px;
+      /* Fixed height for navbar */
+    }
+
+    .navbar-brand {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: white !important;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .navbar .container {
+      max-width: 1400px;
+    }
+
+    .navbar-nav {
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: #94a3b8 !important;
+      font-weight: 500;
+      padding: 0.5rem 0;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: white !important;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-register {
+      background-color: white;
+      color: #1e2937;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+    }
+
+    .btn-signin {
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+    }
+
+    .btn-register:hover {
+      background-color: #f3f4f6;
+    }
+
+    .btn-signin:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Hero Section - Extreme Style */
+    .hero-section {
+      background: var(--gradient);
+      color: white;
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=1000') center/cover;
+      opacity: 0.1;
+      z-index: 0;
+    }
+
+    .hero-section .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-section h1 {
+      font-family: 'Lucida Bright', sans-serif;
+      font-weight: 700;
+      font-size: 3.5rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      margin-bottom: 20px;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .hero-section p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+      animation: fadeInUp 0.8s ease 0.2s forwards;
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    .hero-section img {
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transform: perspective(1000px) rotateY(-5deg);
+      transition: all 0.5s ease;
+      animation: float 6s ease-in-out infinite;
+      border: 5px solid rgba(22, 21, 21, 0.1);
+    }
+
+    .hero-section img:hover {
+      transform: perspective(1000px) rotateY(5deg) scale(1.03);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      border: none;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 12px 30px;
+      border-radius: 50px;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.6);
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    /* Featured Pitches Section */
+    .featured-pitches {
+      padding: 100px 0;
+      background-color: white;
+    }
+
+    .featured-pitches h2 {
+      font-family: 'Lucida Bright', sans-serif;
+      font-weight: 600;
+      color: var(--dark-color);
+      position: relative;
+      display: inline-block;
+    }
+
+    .featured-pitches h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50%;
+      height: 4px;
+      background: var(--gradient);
+      border-radius: 2px;
+    }
+
+    .pitch-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      background: white;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pitch-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient);
+      z-index: 2;
+    }
+
+    .pitch-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .pitch-card .card-body {
+      padding: 25px;
+    }
+
+    .pitch-card .card-title {
+      font-weight: 600;
+      color: var(--dark-color);
+      margin-bottom: 15px;
+    }
+
+    .pitch-card .badge {
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 50px;
+      margin-bottom: 15px;
+    }
+
+    .pitch-card .card-text {
+      color: #000;
+      margin-bottom: 20px;
+    }
+
+    .pitch-details small {
+      display: block;
+      color: #000;
+      margin-bottom: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .pitch-details i {
+      width: 20px;
+      color: var(--primary-color);
+      margin-right: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .pitch-details small:hover {
+      color: var(--dark-color);
+      transform: translateX(5px);
+    }
+
+    .pitch-details small:hover i {
+      color: var(--accent-color);
+    }
+
+    .stats i {
+      color: #94a3b8;
+      transition: all 0.3s ease;
+    }
+
+    .stats i:hover {
+      color: var(--accent-color);
+      transform: scale(1.2);
+    }
+
+    .card-footer {
+      background: rgba(241, 245, 249, 0.8) !important;
+      border-top: none !important;
+      padding: 15px 25px !important;
+    }
+
+    .card-footer .btn {
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+    }
+
+    .card-footer .btn:hover {
+      letter-spacing: 1px;
+    }
+
+    /* Footer - Futuristic Style */
+    footer {
+      background: var(--dark-color);
+      padding: 60px 0 30px;
+      position: relative;
+      clip-path: polygon(0 20%, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient);
+    }
+
+    footer h5 {
+      font-family: 'Lucida Bright', sans-serif;
+      font-weight: 600;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+
+    footer h5::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--accent-color);
+    }
+
+    footer p {
+      opacity: 0.8;
+    }
+
+    /* Modal Styles */
+    .modal-content {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      background: var(--gradient);
+      color: white;
+      border-bottom: none;
+    }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      padding: 12px 15px;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgb(255, 255, 255);
+    }
+
+    /* Spinner */
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+      border-width: 0.25rem;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: perspective(1000px) rotateY(-5deg) translateY(0);
+      }
+
+      50% {
+        transform: perspective(1000px) rotateY(-5deg) translateY(-20px);
+      }
+
+      100% {
+        transform: perspective(1000px) rotateY(-5deg) translateY(0);
+      }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      .hero-section {
+        clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+        padding: 80px 0;
+      }
+
+      .hero-section h1 {
+        font-size: 2.8rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-section {
+        clip-path: polygon(0 0, 100% 0, 100% 97%, 0 100%);
+        padding: 60px 0;
+        text-align: center;
+      }
+
+      .hero-section h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero-section img {
+        margin-top: 30px;
+        max-width: 80%;
+      }
+
+      footer {
+        clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+      }
+    }
+
+    /* Button Hover Effects */
+    .btn-outline-light {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn-outline-light::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient);
+      transition: all 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn-outline-light:hover {
+      color: white !important;
+      border-color: transparent;
+    }
+
+    .btn-outline-light:hover::before {
+      left: 0;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      z-index: 9999;
+    }
+
+    .toast {
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .toast-header {
+      padding: 12px 20px;
+    }
+
+    .toast-body {
+      padding: 15px 20px;
+    }
+
+    /* Profile Modal */
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient);
+      color: white;
+      font-size: 3rem;
+      box-shadow: 0 10px 20px rgb(255, 255, 255);
+    }
+
+    .profile-details h6 {
+      color: var(--primary-color);
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .profile-details p {
+      margin-bottom: 15px;
+    }
+
+    /* Loading Spinner */
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .spinner-border {
+      animation: spin 0.75s linear infinite;
+      color: var(--primary-color);
+    }
+
+    @media (max-width: 991.98px) {
+      .navbar-collapse {
+        background: #1e2937;
+        padding: 1rem;
+        margin: 0 -2rem;
+      }
+
+      .navbar-nav {
+        margin: 1rem 0;
+      }
+
+      .auth-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+      }
+
+      .btn-register,
+      .btn-signin {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    /* Update dashboard visibility */
+    .nav-item.dashboard-item {
+      display: block;
+      /* Always visible */
+    }
+
+    .user-logged-in .nav-item.dashboard-item {
+      display: block;
+      /* Show when user is logged in */
+    }
+
+    .user-logged-in .auth-buttons {
+      display: none;
+      /* Hide auth buttons when user is logged in */
+    }
+
+    /* Role badge styling */
+    .role-badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 12px;
+      background: var(--accent-color);
+      color: white;
+      margin-left: 5px;
+      position: relative;
+      top: -8px;
+    }
+
+    /* Dashboard access specific styles */
+    .feature-restricted {
+      opacity: 0.5;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    /* Auth State Transitions */
+    .auth-buttons {
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .auth-buttons.transitioning {
+      opacity: 0;
+    }
+
+    /* Modal Animations */
+    .modal.fade .modal-dialog {
+      transition: transform 0.3s ease-out;
+    }
+
+    .modal.show .modal-dialog {
+      transform: none;
+    }
+
+    /* State-based button styles */
+    .btn-auth {
+      transition: all 0.3s ease;
+    }
+
+    .btn-auth:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Profile button specific styles */
+    .btn-profile {
+      background: var(--gradient);
+      color: white;
+      border: none;
+    }
+
+    .btn-profile:hover {
+      background: var(--gradient);
+      opacity: 0.9;
+    }
+
+    /* Add styles for enhanced pitch cards */
+    .pitch-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      overflow: hidden;
+    }
+
+    .pitch-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .card-image-container {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .card-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .pitch-card:hover .card-image-container img {
+      transform: scale(1.05);
+    }
+
+    .no-image-placeholder {
+      height: 100%;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .no-image-placeholder i {
+      font-size: 3rem;
+      color: #94a3b8;
+    }
+
+    .card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .pitch-card:hover .card-overlay {
+      opacity: 1;
+    }
+
+    .stats-overlay {
+      display: flex;
+      gap: 1rem;
+      color: white;
+    }
+
+    .stats-overlay span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pitch-details {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      color: #64748b;
+    }
+
+    .author-info, .date-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-view {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-view:hover {
+      transform: translateX(5px);
+    }
+
+    .card-title {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #1e293b;
+    }
+
+    .card-text {
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .badge {
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-rocket"></i>
+        LaunchPad
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="pitches.html">Pitches</a></li>
+          <li class="nav-item"><a class="nav-link" href="founderdashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="aboutus.html">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactus.html">Contact Us</a></li>
+        </ul>
+        <div class="auth-buttons">
+          <a href="register.html" class="btn btn-register">Register</a>
+          <a href="login.html" class="btn btn-signin">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="logoutConfirmModalLabel">Confirm Logout</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p>Are you sure you want to logout?</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" onclick="handleLogout()">Logout</button>
+          </div>
+      </div>
+  </div>
+</div>
+  <!-- Hero Section -->
+  <header class="hero-section py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h1 style="color: #000;">Launch Your Startup Dreams</h1>
+          <p class="lead">Connect with mentors, showcase your pitch, and get valuable feedback to accelerate your
+            startup's growth.</p>
+          <a href="pitch submission form.html" class="btn btn-primary btn-lg">
+            Submit Your Pitch
+          </a>
+        </div>
+        <div class="col-lg-6">
+          <img src="OIP.jpeg" alt="Startup Pitch" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Featured Pitches Section -->
+  <section class="featured-pitches py-5">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Featured Pitches</h2>
+        <a href="pitches.html" class="btn btn-outline-primary">View All Pitches</a>
+      </div>
+      <div class="row" id="featuredPitches">
+        <!-- Pitches will be loaded here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="loginEmail" required>
+            </div>
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="loginPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div class="modal fade" id="signupModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Sign Up</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="signupForm">
+            <div class="mb-3">
+              <label for="signupName" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="signupName" required>
+            </div>
+            <div class="mb-3">
+              <label for="signupEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="signupEmail" required>
+            </div>
+            <div class="mb-3">
+              <label for="signupPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="signupPassword" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">I am a:</label>
+              <div class="d-flex gap-2">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="userRole" id="roleStartup" value="startup" checked>
+                  <label class="form-check-label" for="roleStartup">
+                    Startup Founder
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="userRole" id="roleMentor" value="mentor">
+                  <label class="form-check-label" for="roleMentor">
+                    Mentor
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="userRole" id="roleInvestor" value="investor">
+                  <label class="form-check-label" for="roleInvestor">
+                    Investor
+                  </label>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit Pitch Modal -->
+  <div class="modal fade" id="submitPitchModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Submit Your Pitch</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="pitchForm">
+            <div class="mb-3">
+              <label for="pitchTitle" class="form-label">Pitch Title</label>
+              <input type="text" class="form-control" id="pitchTitle" required>
+            </div>
+            <div class="mb-3">
+              <label for="pitchDescription" class="form-label">Description</label>
+              <textarea class="form-control" id="pitchDescription" rows="4" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="pitchVideo" class="form-label">Video URL (YouTube/Vimeo)</label>
+              <input type="url" class="form-control" id="pitchVideo">
+            </div>
+            <div class="mb-3">
+              <label for="pitchImage" class="form-label">Cover Image</label>
+              <input type="file" class="form-control" id="pitchImage" accept="image/*">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Pitch</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>LaunchPad</h5>
+          <p>Empowering startups to reach new heights</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p>&copy; 2024 LaunchPad. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Profile Modal -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center mb-4">
+            <div class="profile-avatar mb-3">
+              <i class="fas fa-user-circle fa-5x text-primary"></i>
+            </div>
+            <h4 id="profileName">Loading...</h4>
+            <p id="profileEmail" class="text-muted">Loading...</p>
+          </div>
+          <div class="profile-details">
+            <div class="mb-3">
+              <h6>Role</h6>
+              <p id="profileAccountType" class="badge bg-primary">Loading...</p>
+            </div>
+            <div class="mb-3">
+              <h6>Member Since</h6>
+              <p id="profileMemberSince">Loading...</p>
+            </div>
+            <div class="mb-3">
+              <h6>Last Login</h6>
+              <p id="profileLastLogin">Loading...</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="editProfileBtn">Edit Profile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-success text-white">
+        <i class="fas fa-check-circle me-2"></i>
+        <strong class="me-auto">Success</strong>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="toastMessage"></div>
+      </div>
+    <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-danger text-white">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <strong class="me-auto">Error</strong>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+      <div class="toast-body" id="errorToastMessage"></div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Firebase and Pitch Management -->
+  <script type="module">
+    // Import Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, query, orderBy, limit, getDocs, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyC2C2dq3RwYQeUGGA8MzLgxtudcnL_dKuo",
+        authDomain: "launchpad-2ab08.firebaseapp.com",
+        projectId: "launchpad-2ab08",
+        storageBucket: "launchpad-2ab08.firebasestorage.app",
+        messagingSenderId: "974657612108",
+        appId: "1:974657612108:web:adbc2eb0183ca5996687e9",
+        measurementId: "G-Y3B565L6E0"
+    };
+
+    // Initialize Firebase
+    let app;
+    let db;
+    let auth;
+
+    try {
+        app = initializeApp(firebaseConfig);
+        console.log('Firebase app initialized successfully');
+        
+        // Initialize Firestore with offline persistence
+        db = getFirestore(app);
+        enableIndexedDbPersistence(db).catch((err) => {
+            if (err.code === 'failed-precondition') {
+                console.warn('Multiple tabs open, persistence can only be enabled in one tab at a time.');
+            } else if (err.code === 'unimplemented') {
+                console.warn('The current browser does not support persistence.');
+            }
+        });
+        console.log('Firestore initialized successfully');
+        
+        auth = getAuth(app);
+        console.log('Auth initialized successfully');
+    } catch (error) {
+        console.error('Firebase initialization error:', error);
+        showToast('Error initializing Firebase: ' + error.message, 'error');
+    }
+
+    // Function to show toast message
+    function showToast(message, type = 'success') {
+        const toastEl = document.getElementById(type === 'success' ? 'successToast' : 'errorToast');
+        const messageEl = document.getElementById(type === 'success' ? 'toastMessage' : 'errorToastMessage');
+        messageEl.textContent = message;
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    }
+
+    // Function to create pitch card HTML
+    function createPitchCard(pitch) {
+        // Ensure all required fields have default values
+        const title = pitch.startupName || pitch.title || 'Marketplace';
+        const description = pitch.description || 'No description available';
+        const authorName = pitch.authorName || pitch.email || 'Anonymous';
+        const category = pitch.category || 'General';
+        const coverImage = pitch.coverImage || null;
+        const views = pitch.views || 0;
+        const likes = pitch.likes || 0;
+        const comments = pitch.comments || 0;
+        
+        // Format date safely
+        let formattedDate = 'Date not available';
+        try {
+            if (pitch.createdAt && pitch.createdAt.toDate) {
+                formattedDate = new Date(pitch.createdAt.toDate()).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            }
+        } catch (error) {
+            console.warn('Error formatting date:', error);
+        }
+
+        // Safely truncate description
+        const truncatedDescription = description.length > 150 
+            ? description.substring(0, 150) + '...' 
+            : description;
+
+        return `
+            <div class="col-md-4 mb-4">
+                <div class="card pitch-card h-100">
+                    <div class="card-image-container">
+                        ${coverImage ? `
+                            <img src="${coverImage}" class="card-img-top" alt="${title}">
+                        ` : `
+                            <div class="no-image-placeholder">
+                                <i class="fas fa-store"></i>
+                            </div>
+                        `}
+                        <div class="card-overlay">
+                            <span class="badge bg-primary">${category}</span>
+                            <div class="stats-overlay">
+                                <span><i class="fas fa-eye"></i> ${views}</span>
+                                <span><i class="fas fa-heart"></i> ${likes}</span>
+                                <span><i class="fas fa-comment"></i> ${comments}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${title}</h5>
+                        <p class="card-text">${truncatedDescription}</p>
+                        <div class="pitch-details">
+                            <div class="author-info">
+                                <i class="fas fa-user"></i>
+                                <span>${authorName}</span>
+                            </div>
+                            <div class="date-info">
+                                <i class="fas fa-calendar"></i>
+                                <span>${formattedDate}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="pitch-detail.html?id=${pitch.id}" class="btn btn-primary btn-view">
+                            <i class="fas fa-arrow-right"></i> View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Function to fetch and display featured pitches
+    async function fetchFeaturedPitches() {
+        const pitchesContainer = document.getElementById('featuredPitches');
+        
+        if (!db) {
+            console.error('Firestore not initialized');
+            showToast('Database not initialized. Please refresh the page.', 'error');
+            return;
+        }
+
+        try {
+            // Show loading state with animation
+            pitchesContainer.innerHTML = `
+                <div class="col-12 text-center">
+                    <div class="loading-container">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3 text-muted">Loading featured pitches...</p>
+                    </div>
+                </div>
+            `;
+
+            // Query pitches
+            const pitchesRef = collection(db, 'pitches');
+            console.log('Pitches collection reference created');
+
+            const pitchesQuery = query(
+                pitchesRef,
+                orderBy('createdAt', 'desc'),
+                limit(3)
+            );
+            console.log('Query created');
+
+            // Get documents
+            const querySnapshot = await getDocs(pitchesQuery);
+            console.log('Query executed, got snapshot');
+            
+            if (querySnapshot.empty) {
+                console.log('No pitches found');
+                pitchesContainer.innerHTML = `
+                    <div class="col-12 text-center">
+                        <div class="no-pitches-container">
+                            <i class="fas fa-lightbulb fa-3x text-muted mb-3"></i>
+                            <h4 class="text-muted">No Pitches Yet</h4>
+                            <p class="text-muted">Be the first to submit your pitch!</p>
+                            <a href="submit-pitch.html" class="btn btn-primary mt-3">
+                                <i class="fas fa-plus"></i> Submit Your Pitch
+                            </a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            let pitchesHTML = '';
+            querySnapshot.forEach((doc) => {
+                console.log('Processing pitch:', doc.id);
+                const pitch = {
+                    id: doc.id,
+                    ...doc.data()
+                };
+                console.log('Pitch data:', pitch);
+                pitchesHTML += createPitchCard(pitch);
+            });
+
+            pitchesContainer.innerHTML = pitchesHTML;
+            console.log('Pitches displayed successfully');
+        } catch (error) {
+            console.error('Detailed error:', error);
+            console.error('Error code:', error.code);
+            console.error('Error message:', error.message);
+            
+            let errorMessage = 'Error loading pitches. Please try again later.';
+            
+            // Handle specific error cases
+            if (error.code === 'permission-denied') {
+                errorMessage = 'Permission denied. Please check your Firestore rules.';
+            } else if (error.code === 'unavailable') {
+                errorMessage = 'Service unavailable. Please check your internet connection.';
+            } else if (error.code === 'not-found') {
+                errorMessage = 'Collection not found. Please check your database configuration.';
+            } else if (error.code === 'failed-precondition') {
+                errorMessage = 'Database error. Please refresh the page.';
+            }
+            
+            pitchesContainer.innerHTML = `
+                <div class="col-12 text-center">
+                    <div class="error-container">
+                        <i class="fas fa-exclamation-circle fa-3x text-danger mb-3"></i>
+                        <h4 class="text-danger">Error Loading Pitches</h4>
+                        <p class="text-muted">${errorMessage}</p>
+                        <div class="mt-3">
+                            <button class="btn btn-outline-primary me-2" onclick="fetchFeaturedPitches()">
+                                <i class="fas fa-sync-alt"></i> Retry
+                            </button>
+                            <a href="submit-pitch.html" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Submit New Pitch
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            showToast(errorMessage, 'error');
+        }
+    }
+
+    // Load pitches when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        // Wait for Firebase to initialize
+        setTimeout(() => {
+            fetchFeaturedPitches();
+        }, 1000);
+    });
+
+    // Auth state management
+    onAuthStateChanged(auth, (user) => {
+        const authButtonsContainer = document.querySelector('.auth-buttons');
+        
+        if (user) {
+            // User is signed in
+            authButtonsContainer.innerHTML = `
+                <a href="#" class="btn btn-light btn-auth btn-profile" 
+                   data-bs-toggle="modal" data-bs-target="#profileModal">
+                   <i class="fas fa-user-circle me-2"></i>Profile
+                </a>
+                <button type="button" class="btn btn-outline-light ms-2 btn-auth" 
+                        data-bs-toggle="modal" data-bs-target="#logoutConfirmModal">
+                   <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </button>
+            `;
+        } else {
+            // User is signed out
+            authButtonsContainer.innerHTML = `
+                <a class="btn btn-outline-light me-2" href="register.html">Register</a>
+                <a class="btn btn-light" href="login.html">Sign in</a>
+            `;
+        }
+    });
+
+    // Handle logout function
+    window.handleLogout = async function() {
+        try {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        } catch (error) {
+            console.error('Logout error:', error);
+            showToast('Error during logout: ' + error.message, 'error');
+        }
+    };
+</script>
+</body>
+
+</html>
