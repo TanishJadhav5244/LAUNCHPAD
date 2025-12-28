@@ -1,35 +1,85 @@
-// In each dashboard file
-<script type="module">
-  import { auth, db } from './auth.js';
-  import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+// dashboard.js (inside js/ folder)
 
-  // Check user role on page load
-  auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      try {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (!userDoc.exists) {
-          window.location.href = 'index.html';
-          return;
-        }
-        
-        const userData = userDoc.data();
-        const currentPage = window.location.pathname.split('/').pop();
-        const allowedPages = {
-          'founder': 'founderdashboard.html',
-          'mentor': 'mentordashboard.html',
-          'investor': 'investordashboard.html'
-        };
+// Initialize dashboard
+document.addEventListener('DOMContentLoaded', async () => {
+  await dashboardAccess.initialize();
 
-        if (currentPage !== allowedPages[userData.role]) {
-          window.location.href = allowedPages[userData.role] || 'index.html';
-        }
-      } catch (error) {
-        console.error('Error checking user role:', error);
-        window.location.href = 'index.html';
-      }
-    } else {
-      window.location.href = 'login.html';
-    }
+  // Handle logout
+  document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      firebase.auth().signOut();
+      window.location.href = 'index.html';
   });
-</script>
+});
+
+// Update dashboard content based on user role
+function updateDashboardContent() {
+  const user = dashboardAccess.currentUser;
+  if (!user) {
+      window.location.href = 'login.html';
+      return;
+  }
+
+  // Update role indicator
+  const roleIndicator = document.getElementById('roleIndicator');
+  roleIndicator.textContent = `${dashboardAccess.accessData.roles[user.role].displayName} Dashboard`;
+
+  // Get permissions
+  const permissions = dashboardAccess.getUserPermissions();
+  const commonFeatures = dashboardAccess.getCommonFeatures();
+
+  // Generate dashboard content
+  const dashboardContent = document.getElementById('dashboardContent');
+  let html = '';
+
+  // Role-specific features
+  for (const [section, data] of Object.entries(permissions)) {
+      if (data.access) {
+          html += `
+              <div class="col-md-6 col-lg-4">
+                  <div class="feature-card">
+                      <h3>${section.replace('_', ' ').toUpperCase()}</h3>
+                      <ul class="feature-list">
+                          ${data.features.map(feature => `
+                              <li>
+                                  <i class="fas fa-check-circle"></i>
+                                  ${feature.replace('_', ' ')}
+                              </li>
+                          `).join('')}
+                      </ul>
+                  </div>
+              </div>
+          `;
+      }
+  }
+
+  // Common features
+  for (const [section, data] of Object.entries(commonFeatures)) {
+      html += `
+          <div class="col-md-6 col-lg-4">
+              <div class="feature-card">
+                  <h3>${section.replace('_', ' ').toUpperCase()}</h3>
+                  <ul class="feature-list">
+                      ${data.features.map(feature => `
+                          <li>
+                              <i class="fas fa-check-circle"></i>
+                              ${feature.replace('_', ' ')}
+                          </li>
+                      `).join('')}
+                  </ul>
+              </div>
+          </div>
+      `;
+  }
+
+  dashboardContent.innerHTML = html;
+}
+
+// Listen for authentication state changes
+firebase.auth().onAuthStateChanged(async (user) => {
+  if (user) {
+      updateDashboardContent();
+  } else {
+      window.location.href = 'login.html';
+  }
+});

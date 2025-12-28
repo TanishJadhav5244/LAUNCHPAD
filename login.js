@@ -1,6 +1,7 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -22,15 +23,48 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const errorMessage = document.getElementById('errorMessage');
+    
+    // Hide error message initially
+    errorMessage.style.display = 'none';
     
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         
-        alert('Login successful!');
-        window.location.href = 'index.html';
+        // Get user role from Firestore
+        const userDoc = await getDoc(doc(getFirestore(), 'users', user.uid));
+        const userData = userDoc.data();
+        
+        // Redirect based on user role
+        if (userData && userData.role) {
+            redirectToDashboard(userData.role);
+        } else {
+            // Default redirect if no role found
+            window.location.href = 'index.html';
+        }
+        
     } catch (error) {
         console.error('Login error:', error);
-        alert('Login failed: ' + error.message);
+        errorMessage.textContent = 'Login failed: ' + error.message;
+        errorMessage.style.display = 'block';
     }
-}); 
+});
+
+// Function to redirect to appropriate dashboard based on role
+function redirectToDashboard(role) {
+    switch(role) {
+        case 'startup':
+        case 'founder':
+            window.location.href = 'founderdashboard.html';
+            break;
+        case 'investor':
+            window.location.href = 'investordashboard.html';
+            break;
+        case 'mentor':
+            window.location.href = 'mentordashboard.html';
+            break;
+        default:
+            window.location.href = 'dashboard.html';
+    }
+} 

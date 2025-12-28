@@ -1,6 +1,7 @@
 // Import Firebase modules
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -31,8 +32,8 @@ export function selectType(type) {
     window.selectedAccountType = type;
 }
 
-// Function to handle login
-export function login() {
+// Function to handle login with role-based routing
+export async function login() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const messageDiv = document.getElementById('message');
@@ -45,16 +46,46 @@ export function login() {
         return;
     }
     
-    // Here you would typically make an API call to your backend
-    // For now, we'll just show a success message
-    messageDiv.textContent = 'Login successful!';
-    messageDiv.className = 'alert alert-success mt-3';
-    messageDiv.style.display = 'block';
-    
-    // Redirect to dashboard after successful login
-    setTimeout(() => {
-        window.location.href = '/main/dashboard.html';
-    }, 1500);
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        
+        // Get user role from Firestore
+        const userDoc = await getDoc(doc(getFirestore(), 'users', user.uid));
+        const userData = userDoc.data();
+        
+        messageDiv.textContent = 'Login successful!';
+        messageDiv.className = 'alert alert-success mt-3';
+        messageDiv.style.display = 'block';
+        
+        // Redirect based on user role
+        setTimeout(() => {
+            redirectToDashboard(userData.role);
+        }, 1500);
+        
+    } catch (error) {
+        messageDiv.textContent = 'Login failed: ' + error.message;
+        messageDiv.className = 'alert alert-danger mt-3';
+        messageDiv.style.display = 'block';
+    }
+}
+
+// Function to redirect to appropriate dashboard based on role
+function redirectToDashboard(role) {
+    switch(role) {
+        case 'startup':
+        case 'founder':
+            window.location.href = 'founderdashboard.html';
+            break;
+        case 'investor':
+            window.location.href = 'investordashboard.html';
+            break;
+        case 'mentor':
+            window.location.href = 'mentordashboard.html';
+            break;
+        default:
+            window.location.href = 'dashboard.html';
+    }
 }
 
 // Function to handle signup (placeholder for now)

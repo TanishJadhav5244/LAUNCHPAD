@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link href="dashboard.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
@@ -61,87 +61,83 @@
     <script src="js/dashboard-access.js" type="module"></script>
 
     <script type="module">
-        // Initialize dashboard
-        document.addEventListener('DOMContentLoaded', async () => {
-            await dashboardAccess.initialize();
-            
-            // Handle logout
-            document.getElementById('logoutBtn').addEventListener('click', (e) => {
-                e.preventDefault();
-                firebase.auth().signOut();
-                window.location.href = 'index.html';
-            });
-        });
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Update dashboard content based on user role
-        function updateDashboardContent() {
-            const user = dashboardAccess.currentUser;
-            if (!user) {
-                window.location.href = 'login.html';
-                return;
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC2C2dq3RwYQeUGGA8MzLgxtudcnL_dKuo",
+            authDomain: "launchpad-2ab08.firebaseapp.com",
+            projectId: "launchpad-2ab08",
+            storageBucket: "launchpad-2ab08.firebasestorage.app",
+            messagingSenderId: "974657612108",
+            appId: "1:974657612108:web:adbc2eb0183ca5996687e9",
+            measurementId: "G-Y3B565L6E0"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Function to redirect to appropriate dashboard based on role
+        function redirectToDashboard(role) {
+            switch(role) {
+                case 'startup':
+                case 'founder':
+                    window.location.href = 'founderdashboard.html';
+                    break;
+                case 'investor':
+                    window.location.href = 'investordashboard.html';
+                    break;
+                case 'mentor':
+                    window.location.href = 'mentordashboard.html';
+                    break;
+                default:
+                    // Stay on general dashboard
+                    break;
             }
-
-            // Update role indicator
-            const roleIndicator = document.getElementById('roleIndicator');
-            roleIndicator.textContent = `${dashboardAccess.accessData.roles[user.role].displayName} Dashboard`;
-
-            // Get permissions
-            const permissions = dashboardAccess.getUserPermissions();
-            const commonFeatures = dashboardAccess.getCommonFeatures();
-
-            // Generate dashboard content
-            const dashboardContent = document.getElementById('dashboardContent');
-            let html = '';
-
-            // Role-specific features
-            for (const [section, data] of Object.entries(permissions)) {
-                if (data.access) {
-                    html += `
-                        <div class="col-md-6 col-lg-4">
-                            <div class="feature-card">
-                                <h3>${section.replace('_', ' ').toUpperCase()}</h3>
-                                <ul class="feature-list">
-                                    ${data.features.map(feature => `
-                                        <li>
-                                            <i class="fas fa-check-circle"></i>
-                                            ${feature.replace('_', ' ')}
-                                        </li>
-                                    `).join('')}
-                                </ul>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-
-            // Common features
-            for (const [section, data] of Object.entries(commonFeatures)) {
-                html += `
-                    <div class="col-md-6 col-lg-4">
-                        <div class="feature-card">
-                            <h3>${section.replace('_', ' ').toUpperCase()}</h3>
-                            <ul class="feature-list">
-                                ${data.features.map(feature => `
-                                    <li>
-                                        <i class="fas fa-check-circle"></i>
-                                        ${feature.replace('_', ' ')}
-                                    </li>
-                                `).join('')}
-                            </ul>
-                        </div>
-                    </div>
-                `;
-            }
-
-            dashboardContent.innerHTML = html;
         }
 
         // Listen for authentication state changes
-        firebase.auth().onAuthStateChanged(async (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                updateDashboardContent();
+                try {
+                    const userDoc = await getDoc(doc(db, 'users', user.uid));
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        // Redirect to role-specific dashboard
+                        redirectToDashboard(userData.role);
+                    } else {
+                        // User data not found, show general dashboard
+                        document.getElementById('roleIndicator').textContent = 'General Dashboard';
+                        document.getElementById('dashboardContent').innerHTML = `
+                            <div class="col-12 text-center">
+                                <h3>Welcome to LaunchPad!</h3>
+                                <p>Please complete your profile setup to access personalized features.</p>
+                                <a href="profile.html" class="btn btn-primary">Complete Profile</a>
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    console.error('Error checking user role:', error);
+                    window.location.href = 'login.html';
+                }
             } else {
                 window.location.href = 'login.html';
+            }
+        });
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                await signOut(auth);
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Logout error:', error);
             }
         });
     </script>

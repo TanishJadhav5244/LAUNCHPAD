@@ -13,6 +13,7 @@
     getFirestore,
     doc,
     setDoc,
+    getDoc,
     serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -72,6 +73,24 @@
     successMessage.style.display = 'none';
   }
 
+  // Function to redirect to appropriate dashboard based on role
+  function redirectToDashboard(role) {
+    switch(role) {
+      case 'startup':
+      case 'founder':
+        window.location.href = 'founderdashboard.html';
+        break;
+      case 'investor':
+        window.location.href = 'investordashboard.html';
+        break;
+      case 'mentor':
+        window.location.href = 'mentordashboard.html';
+        break;
+      default:
+        window.location.href = 'dashboard.html';
+    }
+  }
+
   passwordInput.addEventListener('input', (e) => {
     validatePassword(e.target.value);
   });
@@ -110,7 +129,7 @@
       });
 
       showSuccess('Account created successfully! Redirecting...');
-      setTimeout(() => window.location.href = 'index.html', 2000);
+      setTimeout(() => redirectToDashboard(selectedRole), 2000);
     } catch (error) {
       let message = 'Failed to create account. ';
       switch (error.code) {
@@ -187,10 +206,16 @@
             });
 
             modal.hide();
-            window.location.href = 'index.html';
+            redirectToDashboard(selectedRole);
           });
         } else {
-          window.location.href = 'index.html';
+          // Existing user, get their role and redirect
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc.exists()) {
+            redirectToDashboard(userDoc.data().role);
+          } else {
+            window.location.href = 'index.html';
+          }
         }
       } catch (error) {
         console.error("Social login error:", error);

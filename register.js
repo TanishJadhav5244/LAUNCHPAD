@@ -6,14 +6,14 @@ import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC2C2dq3RwYQeUGGA8MzLgxtudcnL_dKuo",
-    authDomain: "launchpad-2ab08.firebaseapp.com",
-    projectId: "launchpad-2ab08",
-    storageBucket: "launchpad-2ab08.firebasestorage.app",
-    messagingSenderId: "974657612108",
-    appId: "1:974657612108:web:adbc2eb0183ca5996687e9",
-    measurementId: "G-Y3B565L6E0"
-};
+    apiKey: "AIzaSyDh_xXoGd3-Adw6F8uRY1f1XMDCs10Dwog",
+    authDomain: "buildit-a4f00.firebaseapp.com",
+    projectId: "buildit-a4f00",
+    storageBucket: "buildit-a4f00.firebasestorage.app",
+    messagingSenderId: "266070023537",
+    appId: "1:266070023537:web:d8a1d71f65df93ff73ead0",
+    measurementId: "G-HMCSD02CCE"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -58,6 +58,24 @@ function showSuccess(message) {
 function clearMessages() {
     errorMessage.style.display = 'none';
     successMessage.style.display = 'none';
+}
+
+// Function to redirect to appropriate dashboard based on role
+function redirectToDashboard(role) {
+    switch(role) {
+        case 'startup':
+        case 'founder':
+            window.location.href = 'founderdashboard.html';
+            break;
+        case 'investor':
+            window.location.href = 'investordashboard.html';
+            break;
+        case 'mentor':
+            window.location.href = 'mentordashboard.html';
+            break;
+        default:
+            window.location.href = 'dashboard.html';
+    }
 }
 
 // Password validation on input
@@ -106,7 +124,7 @@ registerForm.addEventListener('submit', async function(e) {
         // Registration successful
         showSuccess('Account created successfully! Redirecting...');
         setTimeout(() => {
-            window.location.href = 'index.html';
+            redirectToDashboard(selectedRole);
         }, 2000);
     } catch (error) {
         console.error("Registration error:", error);
