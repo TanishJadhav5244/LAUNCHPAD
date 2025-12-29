@@ -5,20 +5,21 @@ import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC2C2dq3RwYQeUGGA8MzLgxtudcnL_dKuo",
-    authDomain: "launchpad-2ab08.firebaseapp.com",
-    projectId: "launchpad-2ab08",
-    storageBucket: "launchpad-2ab08.firebasestorage.app",
-    messagingSenderId: "974657612108",
-    appId: "1:974657612108:web:adbc2eb0183ca5996687e9",
-    measurementId: "G-Y3B565L6E0"
+    apiKey: "AIzaSyDh_xXoGd3-Adw6F8uRY1f1XMDCs10Dwog",
+    authDomain: "buildit-a4f00.firebaseapp.com",
+    projectId: "buildit-a4f00",
+    storageBucket: "buildit-a4f00.firebasestorage.app",
+    messagingSenderId: "266070023537",
+    appId: "1:266070023537:web:d8a1d71f65df93ff73ead0",
+    measurementId: "G-HMCSD02CCE"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
+document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const email = document.getElementById('email').value;
@@ -26,14 +27,14 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const errorMessage = document.getElementById('errorMessage');
     
     // Hide error message initially
-    errorMessage.style.display = 'none';
+    if (errorMessage) errorMessage.style.display = 'none';
     
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         
         // Get user role from Firestore
-        const userDoc = await getDoc(doc(getFirestore(), 'users', user.uid));
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
         const userData = userDoc.data();
         
         // Redirect based on user role
@@ -46,8 +47,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         
     } catch (error) {
         console.error('Login error:', error);
-        errorMessage.textContent = 'Login failed: ' + error.message;
-        errorMessage.style.display = 'block';
+        if (errorMessage) {
+            errorMessage.textContent = 'Login failed: ' + error.message;
+            errorMessage.style.display = 'block';
+        }
     }
 });
 

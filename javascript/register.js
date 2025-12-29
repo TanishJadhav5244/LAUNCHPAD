@@ -19,13 +19,13 @@
 
   // Firebase Config
   const firebaseConfig = {
-    apiKey: "AIzaSyA8ZedixW9VBxK9vew-mZrIiArs4pD2qME",
-    authDomain: "launchpad2025-fbf68.firebaseapp.com",
-    projectId: "launchpad2025-fbf68",
-    storageBucket: "launchpad2025-fbf68.appspot.com",
-    messagingSenderId: "287852575824",
-    appId: "1:287852575824:web:f3fba7158a9f43feb26555",
-    measurementId: "G-GZEVYXLSNN"
+    apiKey: "AIzaSyDh_xXoGd3-Adw6F8uRY1f1XMDCs10Dwog",
+    authDomain: "buildit-a4f00.firebaseapp.com",
+    projectId: "buildit-a4f00",
+    storageBucket: "buildit-a4f00.firebasestorage.app",
+    messagingSenderId: "266070023537",
+    appId: "1:266070023537:web:d8a1d71f65df93ff73ead0",
+    measurementId: "G-HMCSD02CCE"
   };
 
   // Initialize Firebase
