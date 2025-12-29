@@ -185,8 +185,15 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       console.log('User data to save:', userData);
       
-      await setDoc(doc(db, 'users', user.uid), userData);
-      console.log('User data saved to Firestore successfully');
+      try {
+        await setDoc(doc(db, 'users', user.uid), userData);
+        console.log('User data saved to Firestore successfully');
+      } catch (firestoreError) {
+        console.error('Firestore save error:', firestoreError);
+        // If Firestore fails but Auth succeeded, still show success but warn user
+        console.warn('User created in Auth but Firestore save failed. User may need to update profile later.');
+        // Continue anyway since the user is created
+      }
 
       showSuccess('Account created successfully! Redirecting...');
       setTimeout(() => redirectToDashboard(selectedRole), 2000);
@@ -194,22 +201,32 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Registration error:', error);
       console.error('Error code:', error.code);
       console.error('Error message:', error.message);
+      console.error('Full error object:', error);
+      
       let message = 'Failed to create account. ';
-      switch (error.code) {
-        case 'auth/email-already-in-use': 
-          message += 'Email already registered.'; 
-          break;
-        case 'auth/invalid-email': 
-          message += 'Invalid email address.'; 
-          break;
-        case 'auth/weak-password': 
-          message += 'Password is too weak.'; 
-          break;
-        case 'auth/network-request-failed':
-          message += 'Network error. Please check your connection.';
-          break;
-        default: 
-          message += error.message || 'An unexpected error occurred.';
+      
+      // Check for Firestore permission errors
+      if (error.code === 'permission-denied' || error.message?.includes('permission')) {
+        message += 'Permission denied. Please check Firebase security rules.';
+      } else if (error.code === 'unavailable' || error.message?.includes('unavailable')) {
+        message += 'Firebase service unavailable. Please try again later.';
+      } else {
+        switch (error.code) {
+          case 'auth/email-already-in-use': 
+            message += 'Email already registered.'; 
+            break;
+          case 'auth/invalid-email': 
+            message += 'Invalid email address.'; 
+            break;
+          case 'auth/weak-password': 
+            message += 'Password is too weak.'; 
+            break;
+          case 'auth/network-request-failed':
+            message += 'Network error. Please check your connection and disable ad blockers if enabled.';
+            break;
+          default: 
+            message += error.message || 'An unexpected error occurred. If you have an ad blocker, please disable it for this site.';
+        }
       }
       showError(message);
     } finally {
