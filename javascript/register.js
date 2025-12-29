@@ -38,8 +38,16 @@
   const passwordInput = document.getElementById('signupPassword');
   const errorMessage = document.getElementById('errorMessage');
   const successMessage = document.getElementById('success-message');
+  
+  // Check if DOM elements exist
+  if (!registerForm || !passwordInput || !errorMessage) {
+    console.error('Required DOM elements not found');
+    return;
+  }
 
   function validatePassword(password) {
+    if (!password) return false;
+    
     const requirements = {
       length: password.length >= 8,
       uppercase: /[A-Z]/.test(password),
@@ -48,29 +56,43 @@
     };
 
     const requirementElements = document.querySelectorAll('.requirement');
-    requirementElements[0].classList.toggle('met', requirements.length);
-    requirementElements[1].classList.toggle('met', requirements.uppercase);
-    requirementElements[2].classList.toggle('met', requirements.number);
-    requirementElements[3].classList.toggle('met', requirements.special);
+    if (requirementElements.length >= 4) {
+      requirementElements[0].classList.toggle('met', requirements.length);
+      requirementElements[1].classList.toggle('met', requirements.uppercase);
+      requirementElements[2].classList.toggle('met', requirements.number);
+      requirementElements[3].classList.toggle('met', requirements.special);
+    }
 
     return Object.values(requirements).every(Boolean);
   }
 
   function showError(message) {
-    errorMessage.textContent = message;
-    errorMessage.style.display = 'block';
-    successMessage.style.display = 'none';
+    if (errorMessage) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
+    }
+    if (successMessage) {
+      successMessage.style.display = 'none';
+    }
   }
 
   function showSuccess(message) {
-    successMessage.textContent = message;
-    successMessage.style.display = 'block';
-    errorMessage.style.display = 'none';
+    if (successMessage) {
+      successMessage.textContent = message;
+      successMessage.style.display = 'block';
+    }
+    if (errorMessage) {
+      errorMessage.style.display = 'none';
+    }
   }
 
   function clearMessages() {
-    errorMessage.style.display = 'none';
-    successMessage.style.display = 'none';
+    if (errorMessage) {
+      errorMessage.style.display = 'none';
+    }
+    if (successMessage) {
+      successMessage.style.display = 'none';
+    }
   }
 
   // Function to redirect to appropriate dashboard based on role
@@ -91,18 +113,26 @@
     }
   }
 
-  passwordInput.addEventListener('input', (e) => {
-    validatePassword(e.target.value);
-  });
+  // Password validation on input
+  if (passwordInput) {
+    passwordInput.addEventListener('input', (e) => {
+      validatePassword(e.target.value);
+    });
+  }
 
   registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearMessages();
 
-    const fullName = document.getElementById('signupName').value.trim();
-    const email = document.getElementById('signupEmail').value.trim();
-    const password = passwordInput.value;
-    const selectedRole = document.getElementById('userRole').value;
+    const fullName = document.getElementById('signupName')?.value.trim();
+    const email = document.getElementById('signupEmail')?.value.trim();
+    const password = passwordInput?.value;
+    const selectedRole = document.getElementById('userRole')?.value;
+
+    if (!fullName || !email || !password || !selectedRole) {
+      showError('Please fill in all required fields.');
+      return;
+    }
 
     if (!validatePassword(password)) {
       showError('Please make sure your password meets all the requirements.');
@@ -110,9 +140,14 @@
     }
 
     const submitButton = registerForm.querySelector('button[type="submit"]');
-    const spinner = submitButton.querySelector('.spinner-border');
+    if (!submitButton) {
+      showError('Form submission error. Please try again.');
+      return;
+    }
+    
+    const originalButtonText = submitButton.textContent;
     submitButton.disabled = true;
-    spinner?.classList.remove('d-none');
+    submitButton.textContent = 'Creating Account...';
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -131,17 +166,28 @@
       showSuccess('Account created successfully! Redirecting...');
       setTimeout(() => redirectToDashboard(selectedRole), 2000);
     } catch (error) {
+      console.error('Registration error:', error);
       let message = 'Failed to create account. ';
       switch (error.code) {
-        case 'auth/email-already-in-use': message += 'Email already registered.'; break;
-        case 'auth/invalid-email': message += 'Invalid email address.'; break;
-        case 'auth/weak-password': message += 'Password is too weak.'; break;
-        default: message += error.message;
+        case 'auth/email-already-in-use': 
+          message += 'Email already registered.'; 
+          break;
+        case 'auth/invalid-email': 
+          message += 'Invalid email address.'; 
+          break;
+        case 'auth/weak-password': 
+          message += 'Password is too weak.'; 
+          break;
+        case 'auth/network-request-failed':
+          message += 'Network error. Please check your connection.';
+          break;
+        default: 
+          message += error.message || 'An unexpected error occurred.';
       }
       showError(message);
     } finally {
       submitButton.disabled = false;
-      spinner?.classList.add('d-none');
+      submitButton.textContent = originalButtonText;
     }
   });
 
@@ -150,16 +196,23 @@
     button.addEventListener('click', async () => {
       clearMessages();
 
-      const providerName = button.querySelector('img').alt.toLowerCase();
+      const imgElement = button.querySelector('img');
+      if (!imgElement) return;
+      
+      const providerName = imgElement.alt.toLowerCase();
       let authProvider;
       if (providerName === 'google') authProvider = new GoogleAuthProvider();
       if (providerName === 'facebook') authProvider = new FacebookAuthProvider();
       if (providerName === 'twitter') authProvider = new TwitterAuthProvider();
 
+      if (!authProvider) return;
+
       const submitButton = registerForm.querySelector('button[type="submit"]');
-      const spinner = submitButton.querySelector('.spinner-border');
+      if (!submitButton) return;
+      
+      const originalButtonText = submitButton.textContent;
       submitButton.disabled = true;
-      spinner?.classList.remove('d-none');
+      submitButton.textContent = 'Connecting...';
 
       try {
         const result = await signInWithPopup(auth, authProvider);
@@ -219,10 +272,10 @@
         }
       } catch (error) {
         console.error("Social login error:", error);
-        showError(error.message);
+        showError(error.message || 'Social login failed. Please try again.');
       } finally {
         submitButton.disabled = false;
-        spinner?.classList.add('d-none');
+        submitButton.textContent = originalButtonText;
       }
     });
   });
