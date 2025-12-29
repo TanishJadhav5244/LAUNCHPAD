@@ -1,47 +1,59 @@
-  // Firebase Imports
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    updateProfile,
-    GoogleAuthProvider,
-    FacebookAuthProvider,
-    TwitterAuthProvider,
-    signInWithPopup
-  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import {
-    getFirestore,
-    doc,
-    setDoc,
-    getDoc,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+// Firebase Imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  TwitterAuthProvider,
+  signInWithPopup
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // Firebase Config
-  const firebaseConfig = {
-    apiKey: "AIzaSyDh_xXoGd3-Adw6F8uRY1f1XMDCs10Dwog",
-    authDomain: "buildit-a4f00.firebaseapp.com",
-    projectId: "buildit-a4f00",
-    storageBucket: "buildit-a4f00.firebasestorage.app",
-    messagingSenderId: "266070023537",
-    appId: "1:266070023537:web:d8a1d71f65df93ff73ead0",
-    measurementId: "G-HMCSD02CCE"
-  };
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyDh_xXoGd3-Adw6F8uRY1f1XMDCs10Dwog",
+  authDomain: "buildit-a4f00.firebaseapp.com",
+  projectId: "buildit-a4f00",
+  storageBucket: "buildit-a4f00.firebasestorage.app",
+  messagingSenderId: "266070023537",
+  appId: "1:266070023537:web:d8a1d71f65df93ff73ead0",
+  measurementId: "G-HMCSD02CCE"
+};
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+// Initialize Firebase
+console.log('Initializing Firebase...', firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+console.log('Firebase initialized successfully', { app, auth, db });
 
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, setting up registration form...');
+  
   // DOM Elements
   const registerForm = document.getElementById('registerForm');
   const passwordInput = document.getElementById('signupPassword');
   const errorMessage = document.getElementById('errorMessage');
   const successMessage = document.getElementById('success-message');
   
+  console.log('DOM Elements:', { registerForm, passwordInput, errorMessage, successMessage });
+  
   // Check if DOM elements exist
   if (!registerForm || !passwordInput || !errorMessage) {
-    console.error('Required DOM elements not found');
+    console.error('Required DOM elements not found:', { registerForm, passwordInput, errorMessage });
+    if (errorMessage) {
+      errorMessage.textContent = 'Error: Required form elements not found. Please refresh the page.';
+      errorMessage.style.display = 'block';
+    }
     return;
   }
 
@@ -120,6 +132,8 @@
     });
   }
 
+  // Form submission handler
+  console.log('Attaching form submission handler...');
   registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearMessages();
@@ -128,6 +142,8 @@
     const email = document.getElementById('signupEmail')?.value.trim();
     const password = passwordInput?.value;
     const selectedRole = document.getElementById('userRole')?.value;
+
+    console.log('Form submitted with data:', { fullName, email, selectedRole, passwordLength: password?.length });
 
     if (!fullName || !email || !password || !selectedRole) {
       showError('Please fill in all required fields.');
@@ -150,23 +166,34 @@
     submitButton.textContent = 'Creating Account...';
 
     try {
+      console.log('Creating user account...', { email, fullName, selectedRole });
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      console.log('User created in Auth:', user.uid);
 
+      console.log('Updating user profile...');
       await updateProfile(user, { displayName: fullName });
+      console.log('Profile updated');
 
-      await setDoc(doc(db, 'users', user.uid), {
+      console.log('Saving user data to Firestore...', { uid: user.uid });
+      const userData = {
         fullName,
         email,
         role: selectedRole,
         userId: user.uid,
         createdAt: serverTimestamp()
-      });
+      };
+      console.log('User data to save:', userData);
+      
+      await setDoc(doc(db, 'users', user.uid), userData);
+      console.log('User data saved to Firestore successfully');
 
       showSuccess('Account created successfully! Redirecting...');
       setTimeout(() => redirectToDashboard(selectedRole), 2000);
     } catch (error) {
       console.error('Registration error:', error);
+      console.error('Error code:', error.code);
+      console.error('Error message:', error.message);
       let message = 'Failed to create account. ';
       switch (error.code) {
         case 'auth/email-already-in-use': 
@@ -279,3 +306,4 @@
       }
     });
   });
+});
