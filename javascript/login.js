@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, enableNetwork, disableNetwork } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -18,9 +18,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// DOM Elements
-const loginForm = document.getElementById("loginForm");
-const errorMessage = document.getElementById("errorMessage");
+// Ensure Firestore network is enabled
+enableNetwork(db).catch(err => {
+  console.warn('Firestore network enable warning:', err);
+});
 
 // Function to redirect to appropriate dashboard based on role
 function redirectToDashboard(role) {
@@ -40,8 +41,21 @@ function redirectToDashboard(role) {
   }
 }
 
-// Handle form submission
-loginForm.addEventListener("submit", async function (e) {
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, setting up login form...');
+  
+  // DOM Elements
+  const loginForm = document.getElementById("loginForm");
+  const errorMessage = document.getElementById("errorMessage");
+  
+  if (!loginForm) {
+    console.error('Login form not found');
+    return;
+  }
+
+  // Handle form submission
+  loginForm.addEventListener("submit", async function (e) {
   e.preventDefault();
   errorMessage.style.display = "none";
 
@@ -49,26 +63,64 @@ loginForm.addEventListener("submit", async function (e) {
   const password = document.getElementById("password").value;
 
   try {
+    console.log('Attempting login...');
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
+    console.log('Login successful, user UID:', user.uid);
+    
+    // Ensure network is enabled before reading
+    try {
+      await enableNetwork(db);
+    } catch (networkError) {
+      console.warn('Network enable warning (continuing anyway):', networkError);
+    }
     
     // Get user role from Firestore
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
-    const userData = userDoc.data();
+    console.log('Fetching user data from Firestore...');
+    const userDocRef = doc(db, 'users', user.uid);
+    const userDoc = await getDoc(userDocRef);
     
-    // Redirect based on user role
-    if (userData && userData.role) {
-      redirectToDashboard(userData.role);
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      console.log('User data retrieved:', userData);
+      
+      // Redirect based on user role
+      if (userData && userData.role) {
+        redirectToDashboard(userData.role);
+      } else {
+        console.warn('User document exists but no role found, redirecting to index');
+        window.location.href = 'index.html';
+      }
     } else {
-      // Default redirect if no role found
+      console.warn('User document does not exist in Firestore');
+      // User exists in Auth but not in Firestore - redirect to index
       window.location.href = 'index.html';
     }
     
   } catch (error) {
     console.error("Login error:", error);
-    errorMessage.textContent = error.message;
-    errorMessage.style.display = "block";
-  }
+    console.error("Error code:", error.code);
+    console.error("Error message:", error.message);
+    
+    let errorMsg = 'Login failed: ';
+    if (error.code === 'unavailable' || error.message?.includes('offline')) {
+      errorMsg += 'Network error. Please check your connection and try again.';
+    } else if (error.code === 'auth/invalid-credential') {
+      errorMsg += 'Invalid email or password.';
+    } else if (error.code === 'auth/user-not-found') {
+      errorMsg += 'No account found with this email.';
+    } else if (error.code === 'auth/wrong-password') {
+      errorMsg += 'Incorrect password.';
+    } else {
+      errorMsg += error.message || 'An unexpected error occurred.';
+    }
+    
+    if (errorMessage) {
+      errorMessage.textContent = errorMsg;
+      errorMessage.style.display = "block";
+    }
+  });
+  });
 });
 
 // Check auth state
@@ -77,13 +129,27 @@ onAuthStateChanged(auth, async (user) => {
     console.log("User already signed in:", user.email);
     // If user is already signed in, redirect to appropriate dashboard
     try {
+      // Ensure network is enabled
+      try {
+        await enableNetwork(db);
+      } catch (networkError) {
+        console.warn('Network enable warning:', networkError);
+      }
+      
       const userDoc = await getDoc(doc(db, 'users', user.uid));
-      const userData = userDoc.data();
-      if (userData && userData.role) {
-        redirectToDashboard(userData.role);
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        if (userData && userData.role) {
+          redirectToDashboard(userData.role);
+        } else {
+          console.warn('User document exists but no role found');
+        }
+      } else {
+        console.warn('User document does not exist in Firestore');
       }
     } catch (error) {
       console.error("Error getting user data:", error);
+      // Don't block the user if Firestore read fails
     }
   }
 });
