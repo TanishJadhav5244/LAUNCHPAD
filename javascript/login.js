@@ -120,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
       errorMessage.style.display = "block";
     }
   });
-  });
 });
 
 // Check auth state
