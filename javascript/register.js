@@ -14,7 +14,8 @@ import {
   doc,
   setDoc,
   getDoc,
-  serverTimestamp
+  serverTimestamp,
+  enableNetwork
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Firebase Config
@@ -34,6 +35,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 console.log('Firebase initialized successfully', { app, auth, db });
+
+// Ensure Firestore network is enabled
+enableNetwork(db).catch(err => {
+  console.warn('Firestore network enable warning:', err);
+});
 
 // Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -176,6 +182,14 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('Profile updated');
 
       console.log('Saving user data to Firestore...', { uid: user.uid });
+      
+      // Ensure network is enabled before writing
+      try {
+        await enableNetwork(db);
+      } catch (networkError) {
+        console.warn('Network enable warning (continuing anyway):', networkError);
+      }
+      
       const userData = {
         fullName,
         email,
@@ -185,15 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       console.log('User data to save:', userData);
       
-      try {
-        await setDoc(doc(db, 'users', user.uid), userData);
-        console.log('User data saved to Firestore successfully');
-      } catch (firestoreError) {
-        console.error('Firestore save error:', firestoreError);
-        // If Firestore fails but Auth succeeded, still show success but warn user
-        console.warn('User created in Auth but Firestore save failed. User may need to update profile later.');
-        // Continue anyway since the user is created
-      }
+      // Save to Firestore - this must succeed for registration to be complete
+      await setDoc(doc(db, 'users', user.uid), userData);
+      console.log('User data saved to Firestore successfully');
 
       showSuccess('Account created successfully! Redirecting...');
       setTimeout(() => redirectToDashboard(selectedRole), 2000);
